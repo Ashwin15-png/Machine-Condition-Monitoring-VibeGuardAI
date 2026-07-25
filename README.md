@@ -23,8 +23,48 @@ An enterprise-grade, real-time machine condition monitoring and predictive maint
 
 ---
 
+## 🌐 Active Live Deployment & Quick Start Guide
+
+> **Live Production Platform URL:** [https://machine-condition-monitoring-vibe-g.vercel.app/login](https://machine-condition-monitoring-vibe-g.vercel.app/login)
+
+### 1️⃣ How to Create an Account (Registration)
+1. Open the active web application at [https://machine-condition-monitoring-vibe-g.vercel.app/login](https://machine-condition-monitoring-vibe-g.vercel.app/login).
+2. Click **"Create an account"** at the bottom of the sign-in modal (or navigate directly to `/register`).
+3. Fill in your **Full Name**, **Corporate Email Address**, and desired **Password**.
+4. Select your **Role / Assignment** (*Operator*, *Engineer*, *Administrator*, *Supervisor*, or *Reliability Engineer*).
+5. Click **"Create Profile & Initialize"** to create your account and automatically enter the dashboard.
+
+---
+
+### 2️⃣ How to Login
+* **Option A: Corporate Credentials**
+  1. Go to [https://machine-condition-monitoring-vibe-g.vercel.app/login](https://machine-condition-monitoring-vibe-g.vercel.app/login).
+  2. Enter your registered **Email Address** and **Password**.
+  3. Click **"Access Dashboard"**.
+
+* **Option B: One-Click Enterprise Demo Access (Instant)**
+  1. Go to [https://machine-condition-monitoring-vibe-g.vercel.app/login](https://machine-condition-monitoring-vibe-g.vercel.app/login).
+  2. Locate the **⚡ Enterprise Demo Access** card at the bottom of the login box.
+  3. Click **"Autofill & Login"** for instant 1-click authentication as a Demo Operator.
+
+---
+
+### 3️⃣ How to Experience Real-Time Telemetry Simulation
+1. After signing in, you will land on the **Industrial Command Center Dashboard** (`/overview`).
+2. **Automated Live Engine:** The backend edge simulator automatically generates and streams real-time industrial telemetry (Vibration RMS, Temperature, RPM, Pressure, Voltage) every 2 seconds via Socket.IO.
+3. **Observe Live Telemetry:**
+   - Watch real-time live dynamic charts for tri-axial vibration, temperature, and machine health scores update automatically.
+   - Use the **Machine Selector** dropdown to switch telemetry views between *"All Machines (Fleet)"* and individual units (e.g. `MCH-101`, `MCH-102`).
+4. **Explore Interactive Simulation Features:**
+   - **Analytics (`/analytics`):** Real-time FFT spectral analysis, RUL predictions, and ISO 10816 vibration severity compliance tables.
+   - **Readings Vault (`/readings`):** Browse live readings continuously generated and validated by the DSP engine.
+   - **Manual Registration (`/readings/new`):** Submit manual sensor readings to trigger real-time validation, spike filtering, and alert threshold logic.
+
+---
+
 ## 📑 Table of Contents
 
+0. [Active Live Deployment & Quick Start Guide](#-active-live-deployment--quick-start-guide)
 1. [Project Overview](#1-project-overview)
 2. [System Architecture](#2-system-architecture)
 3. [Technology Stack](#3-technology-stack)
