@@ -12,6 +12,8 @@ export const Input = ({
   id,
   type = 'text',
   showPasswordToggle = type === 'password',
+  autoComplete,
+  'aria-label': ariaLabel,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,27 +26,27 @@ export const Input = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)] mb-[10px] select-none"
+          className="block text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)] mb-[12px] select-none"
         >
           {label}
         </label>
       )}
-      <div className="relative w-full flex items-center">
+      <div className="relative flex items-center w-full">
         {Icon && (
-          <div className="absolute left-[20px] top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)] flex items-center justify-center z-10">
-            <Icon className="w-5 h-5" />
-          </div>
+          <Icon className="absolute left-[20px] top-1/2 -translate-y-1/2 w-[20px] h-[20px] opacity-75 pointer-events-none text-[var(--text-muted)] z-10" />
         )}
 
         <input
           id={inputId}
           type={effectiveType}
+          autoComplete={autoComplete}
+          aria-label={ariaLabel || label || props.placeholder || inputId}
           className={clsx(
-            'w-full h-[56px] rounded-[14px] bg-[var(--bg-secondary)] border border-[var(--border)] text-[var(--text-primary)] text-[15px] font-sans transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--info)]/40 focus:border-[var(--info)] disabled:opacity-50 disabled:cursor-not-allowed leading-relaxed',
-            'placeholder:text-[var(--text-muted)] placeholder:text-[15px]',
-            Icon ? 'pl-[56px]' : 'pl-[20px]',
-            isPassword || RightIcon ? 'pr-[52px]' : 'pr-[20px]',
-            error ? 'border-[var(--danger)] focus:ring-[var(--danger)]/40' : 'hover:border-[var(--text-muted)]',
+            'w-full h-[56px] rounded-[14px] bg-[#111111] border border-white/10 text-white text-[15px] font-sans transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#06B6D4]/40 focus:border-[#06B6D4] disabled:opacity-50 disabled:cursor-not-allowed leading-relaxed',
+            'placeholder:text-white/45 placeholder:text-[15px] placeholder:font-normal',
+            Icon ? 'pl-[60px]' : 'pl-[20px]',
+            isPassword || RightIcon ? 'pr-[55px]' : 'pr-[20px]',
+            error ? 'border-[var(--danger)] focus:ring-[var(--danger)]/40' : 'hover:border-white/20',
             className
           )}
           {...props}
@@ -54,14 +56,15 @@ export const Input = ({
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-[20px] top-1/2 -translate-y-1/2 p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors focus:outline-none cursor-pointer flex items-center justify-center z-10"
+            className="absolute right-[18px] top-1/2 -translate-y-1/2 w-[20px] h-[20px] opacity-75 hover:opacity-100 text-white transition-opacity focus:outline-none focus:ring-2 focus:ring-[#06B6D4]/50 rounded-sm cursor-pointer flex items-center justify-center z-10"
             title={showPassword ? 'Hide password' : 'Show password'}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
+            tabIndex={0}
           >
             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
           </button>
         ) : RightIcon ? (
-          <div className="absolute right-[20px] top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none flex items-center justify-center z-10">
+          <div className="absolute right-[18px] top-1/2 -translate-y-1/2 w-[20px] h-[20px] opacity-75 text-white pointer-events-none flex items-center justify-center z-10">
             <RightIcon className="w-5 h-5" />
           </div>
         ) : null}
@@ -69,7 +72,7 @@ export const Input = ({
       {error ? (
         <p className="text-xs text-[var(--danger)] mt-1.5 font-medium">{error}</p>
       ) : helperText ? (
-        <p className="text-xs text-[var(--text-muted)] mt-1.5">{helperText}</p>
+        <p className="text-xs text-white/50 mt-1.5">{helperText}</p>
       ) : null}
     </div>
   );
