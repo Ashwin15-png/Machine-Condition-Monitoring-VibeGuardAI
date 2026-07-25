@@ -2,7 +2,9 @@ const Maintenance = require('../models/Maintenance');
 
 const getMaintenanceTasks = async (req, res) => {
   try {
-    const tasks = await Maintenance.find({}).sort({ scheduledDate: -1 });
+    const { machineId } = req.query;
+    const query = (machineId && machineId !== 'ALL') ? { machineId } : {};
+    const tasks = await Maintenance.find(query).sort({ scheduledDate: -1 });
     return res.json({ success: true, data: tasks });
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });

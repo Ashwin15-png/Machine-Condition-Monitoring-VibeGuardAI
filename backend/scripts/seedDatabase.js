@@ -11,8 +11,8 @@ const sampleReadings = require('../data/sampleReadings');
 const seedDB = async () => {
   try {
     console.log('[SEED] Connecting to MongoDB Atlas...');
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://mayonash04_db_user:IbiK15wKI8CigDM6@cluster0.yjj9fgg.mongodb.net/?appName=Cluster0');
-    console.log('[SEED] Connected to Atlas.');
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/vibeguard_local');
+    console.log('[SEED] Connected to Database.');
 
     console.log('[SEED] Wiping old collections...');
     await Machine.deleteMany({});

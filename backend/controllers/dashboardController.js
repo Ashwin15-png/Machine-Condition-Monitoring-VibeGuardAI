@@ -4,7 +4,11 @@ const Alert = require('../models/Alert');
 
 const getDashboardData = async (req, res) => {
   try {
-    const fleet = await Machine.find({});
+    const { machineId } = req.query;
+
+    const machineFilter = machineId && machineId !== 'ALL' ? { machineId } : {};
+
+    const fleet = await Machine.find(machineId && machineId !== 'ALL' ? { machineId } : {});
 
     const healthyCount = fleet.filter((m) => m.status === 'Healthy').length;
     const warningCount = fleet.filter((m) => m.status === 'Warning').length;
@@ -22,13 +26,16 @@ const getDashboardData = async (req, res) => {
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
 
-    const readingsToday = await Telemetry.countDocuments({ timestamp: { $gte: startOfToday } });
+    const readingsTodayQuery = { timestamp: { $gte: startOfToday }, ...machineFilter };
+    const readingsToday = await Telemetry.countDocuments(readingsTodayQuery);
     
     // Total alert count
-    const activeAlerts = await Alert.countDocuments({ status: 'Active' });
+    const alertsQuery = { status: 'Active', ...machineFilter };
+    const activeAlerts = await Alert.countDocuments(alertsQuery);
 
     // Build history for the dashboard chart similarly to telemetryController
     const recentDocs = await Telemetry.aggregate([
+      { $match: machineFilter },
       { $sort: { timestamp: -1 } },
       { $limit: 300 }, 
     ]);
@@ -46,7 +53,9 @@ const getDashboardData = async (req, res) => {
         }
         historyMap[timeKey].temps.push(doc.temperature);
         historyMap[timeKey].vibs.push(doc.vibrationRMS || 0);
-        if (doc.machineId === 'MCH-101') {
+        if (!machineFilter.machineId && doc.machineId === 'MCH-101') {
+            historyMap[timeKey].primary = doc;
+        } else if (machineFilter.machineId) {
             historyMap[timeKey].primary = doc;
         }
     }

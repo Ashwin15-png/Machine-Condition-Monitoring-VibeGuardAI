@@ -2,7 +2,9 @@ const Alert = require('../models/Alert');
 
 const getAlerts = async (req, res) => {
   try {
-    const alerts = await Alert.find({}).sort({ timestamp: -1 });
+    const { machineId } = req.query;
+    const query = (machineId && machineId !== 'ALL') ? { machineId } : {};
+    const alerts = await Alert.find(query).sort({ timestamp: -1 });
     // Map to frontend expected shape to avoid breaking UI components
     const mappedAlerts = alerts.map(a => ({
        id: a.alertId,

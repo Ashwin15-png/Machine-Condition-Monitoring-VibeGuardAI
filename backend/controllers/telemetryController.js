@@ -4,14 +4,17 @@ const { Parser } = require('json2csv');
 
 const getTelemetryStream = async (req, res) => {
   try {
-    // 1. Fetch Fleet from MongoDB
-    const fleet = await Machine.find({});
+    const { machineId } = req.query;
+    const machineFilter = machineId && machineId !== 'ALL' ? { machineId } : {};
 
-    // 2. Fetch recent telemetry history (aggregate latest 100 samples)
-    // For a highly accurate chart, we can fetch the last 100 distinct timestamps.
+    // 1. Fetch Fleet from MongoDB
+    const fleet = await Machine.find(machineFilter);
+
+    // 2. Fetch recent telemetry history
     const recentDocs = await Telemetry.aggregate([
+      { $match: machineFilter },
       { $sort: { timestamp: -1 } },
-      { $limit: 300 }, // Assuming ~6 machines per cycle, grab enough to cover 50 cycles
+      { $limit: 300 },
     ]);
 
     // Group by timestamp to reconstruct history array format expected by frontend
@@ -28,8 +31,10 @@ const getTelemetryStream = async (req, res) => {
         }
         historyMap[timeKey].temps.push(doc.temperature);
         historyMap[timeKey].vibs.push(doc.vibrationRMS || 0);
-        // Track CNC Milling Center Alpha as primary
-        if (doc.machineId === 'MCH-101') {
+        
+        if (!machineFilter.machineId && doc.machineId === 'MCH-101') {
+            historyMap[timeKey].primary = doc;
+        } else if (machineFilter.machineId) {
             historyMap[timeKey].primary = doc;
         }
     }
@@ -68,15 +73,26 @@ const getTelemetryStream = async (req, res) => {
 
 const getHistoryLogs = async (req, res) => {
   try {
-    const logs = await Telemetry.find({ machineId: 'MCH-101' }).sort({ timestamp: -1 }).limit(100);
+    const { machineId } = req.query;
+    const query = (machineId && machineId !== 'ALL') ? { machineId } : {};
+    const logs = await Telemetry.find(query).sort({ timestamp: -1 }).limit(100);
+    const machinesCache = {};
+
+    for (const log of logs) {
+        if (!machinesCache[log.machineId]) {
+            const m = await Machine.findOne({ machineId: log.machineId });
+            machinesCache[log.machineId] = m ? m.name : log.machineId;
+        }
+    }
+
     const formattedLogs = logs.map((item, idx) => ({
       id: `LOG-${8800 + idx}`,
       timestamp: new Date(item.timestamp).toLocaleTimeString('en-US', { hour12: false }),
       machineId: item.machineId,
-      machineName: 'CNC Milling Center Alpha',
+      machineName: machinesCache[item.machineId] || 'Machine',
       metric: 'Temperature & Vibration',
       val: `${item.temperature} °C / ${item.vibrationRMS} mm/s`,
-      status: item.temperature > 75.0 ? 'Exceeded' : 'Normal',
+      status: item.temperature > 75.0 || item.vibrationRMS > 4.5 ? 'Exceeded' : 'Normal',
     }));
     return res.json({ success: true, data: formattedLogs });
   } catch (error) {
@@ -86,7 +102,9 @@ const getHistoryLogs = async (req, res) => {
 
 const exportHistoryLogsCSV = async (req, res) => {
   try {
-    const logs = await Telemetry.find({}).sort({ timestamp: -1 }).limit(1000);
+    const { machineId } = req.query;
+    const query = (machineId && machineId !== 'ALL') ? { machineId } : {};
+    const logs = await Telemetry.find(query).sort({ timestamp: -1 }).limit(1000);
     const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     
     const formattedLogs = logs.map((item, idx) => ({

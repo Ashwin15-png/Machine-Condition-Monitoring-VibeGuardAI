@@ -2,7 +2,9 @@ const Machine = require('../models/Machine');
 
 const getOeeData = async (req, res) => {
   try {
-    const fleet = await Machine.find({});
+    const { machineId } = req.query;
+    const query = (machineId && machineId !== 'ALL') ? { machineId } : {};
+    const fleet = await Machine.find(query);
 
     const oeeData = fleet.map(m => {
       // Calculate random but deterministic OEE stats based on healthScore

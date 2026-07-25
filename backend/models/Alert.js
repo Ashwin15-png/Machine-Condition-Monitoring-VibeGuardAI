@@ -17,4 +17,6 @@ const AlertSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+AlertSchema.index({ machineId: 1, status: 1 });
+
 module.exports = mongoose.model('Alert', AlertSchema);

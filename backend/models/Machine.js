@@ -30,4 +30,6 @@ const MachineSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+MachineSchema.index({ machineId: 1, status: 1 });
+
 module.exports = mongoose.model('Machine', MachineSchema);

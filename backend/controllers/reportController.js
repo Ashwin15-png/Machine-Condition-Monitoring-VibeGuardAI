@@ -4,8 +4,11 @@ const { Parser } = require('json2csv');
 const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 
-const getReadingsPayload = async () => {
+const getReadingsPayload = async (machineId) => {
+    const matchStage = (machineId && machineId !== 'ALL') ? { $match: { machine_id: machineId } } : { $match: {} };
+
     const data = await Reading.aggregate([
+        matchStage,
         { $sort: { recorded_at: -1 } },
         { $limit: 1000 },
         { $lookup: {
@@ -43,7 +46,8 @@ const getReadingsPayload = async () => {
 
 const exportCSV = async (req, res) => {
     try {
-        const readings = await getReadingsPayload();
+        const { machineId } = req.query;
+        const readings = await getReadingsPayload(machineId);
         
         // Remove manual fields to automatically inherit the aggregated array keys
         const json2csvParser = new Parser();
@@ -60,7 +64,8 @@ const exportCSV = async (req, res) => {
 
 const exportJSON = async (req, res) => {
     try {
-        const readings = await getReadingsPayload();
+        const { machineId } = req.query;
+        const readings = await getReadingsPayload(machineId);
         const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
         res.header('Content-Type', 'application/json');
         res.attachment(`Machine_Condition_Report_${dateStr}.json`);
@@ -72,7 +77,8 @@ const exportJSON = async (req, res) => {
 
 const exportExcel = async (req, res) => {
     try {
-        const readings = await getReadingsPayload();
+        const { machineId } = req.query;
+        const readings = await getReadingsPayload(machineId);
         
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Telemetry Summary', {
@@ -106,8 +112,10 @@ const exportExcel = async (req, res) => {
 
 const exportPDF = async (req, res) => {
     try {
-        const machines = await Machine.find({});
-        const readings = await getReadingsPayload();
+        const { machineId } = req.query;
+        const machineFilter = (machineId && machineId !== 'ALL') ? { machineId } : {};
+        const machines = await Machine.find(machineFilter);
+        const readings = await getReadingsPayload(machineId);
         
         const doc = new PDFDocument({ margin: 40, size: 'A4' });
         const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');

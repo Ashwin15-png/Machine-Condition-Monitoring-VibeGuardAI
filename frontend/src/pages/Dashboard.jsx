@@ -31,7 +31,7 @@ import { alertService } from '../services/alertService';
 import { machineService } from '../services/machineService';
 
 export const Dashboard = () => {
-  const { stats, healthPieData, history, fleet, alerts, loading, connected } = useRealtimeDashboard();
+  const { stats, healthPieData, history, fleet, alerts, loading, connected, machineId, setMachineId } = useRealtimeDashboard();
   const [selectedMachine, setSelectedMachine] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [localFleet, setLocalFleet] = useState(null);
@@ -103,6 +103,18 @@ export const Dashboard = () => {
           >
             Refresh Telemetry
           </Button>
+          <select
+            value={machineId}
+            onChange={(e) => setMachineId(e.target.value)}
+            className="bg-slate-900 border border-slate-700 text-slate-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 py-1.5 h-[34px] outline-none"
+          >
+            <option value="ALL">All Machines (Fleet)</option>
+            {displayFleet.map((m) => (
+              <option key={m.machineId} value={m.machineId}>
+                {m.machineId}
+              </option>
+            ))}
+          </select>
           <Button variant="primary" size="sm" icon={Sliders}>
             Configure Thresholds
           </Button>
@@ -112,8 +124,8 @@ export const Dashboard = () => {
       {/* Primary KPI Stat Cards Grid (8 Cards) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Total Machines"
-          value={stats.totalMachines}
+          title={machineId !== 'ALL' ? 'Selected Machine' : 'Total Machines'}
+          value={machineId !== 'ALL' ? 1 : stats.totalMachines}
           unit="units"
           icon={Cpu}
           color="blue"

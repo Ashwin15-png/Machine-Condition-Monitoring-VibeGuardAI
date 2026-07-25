@@ -22,7 +22,7 @@ const ReadingSchema = new mongoose.Schema(
 );
 
 ReadingSchema.index({ recorded_at: -1 });
-ReadingSchema.index({ machine_id: 1 });
+ReadingSchema.index({ machine_id: 1, recorded_at: -1, alert_flag: 1 });
 ReadingSchema.index({ alert_flag: 1 });
 
 module.exports = mongoose.model('Reading', ReadingSchema);

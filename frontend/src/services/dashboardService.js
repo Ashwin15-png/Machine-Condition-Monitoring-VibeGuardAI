@@ -2,25 +2,22 @@ import { useState, useEffect } from 'react';
 import api from './api';
 import socket from './socket';
 
-export const useRealtimeDashboard = () => {
+export const useRealtimeDashboard = (initialMachineId = 'ALL') => {
+  const [machineId, setMachineId] = useState(initialMachineId);
   const [data, setData] = useState({
     stats: {
-      totalMachines: 24,
-      healthyMachines: 18,
-      warningMachines: 4,
-      criticalMachines: 2,
-      avgTemperature: 51.4,
-      avgVibration: 2.38,
-      readingsToday: 14280,
-      alertCount: 6,
-      runningMachines: 21,
-      overallOEE: 87.5,
+      totalMachines: 0,
+      healthyMachines: 0,
+      warningMachines: 0,
+      criticalMachines: 0,
+      avgTemperature: 0,
+      avgVibration: 0,
+      readingsToday: 0,
+      alertCount: 0,
+      runningMachines: 0,
+      overallOEE: 0,
     },
-    healthPieData: [
-      { name: 'Healthy', value: 18, color: '#22C55E' },
-      { name: 'Warning', value: 4, color: '#F59E0B' },
-      { name: 'Critical', value: 2, color: '#EF4444' },
-    ],
+    healthPieData: [],
     history: [],
     fleet: [],
     alerts: [],
@@ -30,13 +27,14 @@ export const useRealtimeDashboard = () => {
 
   useEffect(() => {
     let isMounted = true;
+    setData((prev) => ({ ...prev, loading: true }));
 
     // Fetch initial REST snapshot
     const fetchSnapshot = async () => {
       try {
         const [dashRes, alertRes] = await Promise.all([
-          api.get('/dashboard'),
-          api.get('/alerts'),
+          api.get(`/dashboard?machineId=${machineId}`),
+          api.get(`/alerts?machineId=${machineId}`),
         ]);
 
         if (isMounted && dashRes.data.success) {
@@ -60,7 +58,10 @@ export const useRealtimeDashboard = () => {
 
     // Socket.IO event handlers
     const onConnect = () => {
-      if (isMounted) setData((prev) => ({ ...prev, connected: true }));
+      if (isMounted) {
+        setData((prev) => ({ ...prev, connected: true }));
+        socket.emit('subscribe:telemetry', machineId);
+      }
     };
 
     const onDisconnect = () => {
@@ -129,6 +130,7 @@ export const useRealtimeDashboard = () => {
 
     if (socket.connected) {
       setData((prev) => ({ ...prev, connected: true }));
+      socket.emit('subscribe:telemetry', machineId);
     }
 
     return () => {
@@ -140,7 +142,7 @@ export const useRealtimeDashboard = () => {
       socket.off('machine:update', onMachineUpdate);
       socket.off('alert:new', onAlertNew);
     };
-  }, []);
+  }, [machineId]);
 
-  return data;
+  return { ...data, machineId, setMachineId };
 };

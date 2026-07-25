@@ -106,15 +106,16 @@ const addReading = async (req, res) => {
        { new: true }
     );
 
-    // Broadcast live Socket.IO update if io instance present
     const io = req.app.get('io');
     if (io) {
-      io.emit('reading:new', newReading);
+      io.to('ALL').emit('reading:new', newReading);
+      io.to(machine_id.trim()).emit('reading:new', newReading);
       
       // Update dashboard live
       if (updatedMac) {
         // Optional forced machine update
-        io.emit('machine:update', [updatedMac]);
+        io.to('ALL').emit('machine:update', [updatedMac]);
+        io.to(machine_id.trim()).emit('machine:update', [updatedMac]);
       }
     }
 

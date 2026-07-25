@@ -389,11 +389,42 @@ async function startTelemetrySimulator(io) {
       };
 
       if (io) {
-        io.emit('telemetry:update', { sample: latestSample, history: telemetryHistory, sihRecord: finalPersistedRecord });
-        io.emit('machine:update', updatedFleet);
-        io.emit('dashboard:update', stats);
+        // Broadcast to ALL (Dashboard fleet view)
+        io.to('ALL').emit('telemetry:update', { sample: latestSample, history: telemetryHistory, sihRecord: finalPersistedRecord });
+        io.to('ALL').emit('machine:update', updatedFleet);
+        io.to('ALL').emit('dashboard:update', stats);
+        
         if (finalPersistedRecord) {
-            io.emit('reading:new', finalPersistedRecord);
+            io.to('ALL').emit('reading:new', finalPersistedRecord);
+            io.to(finalPersistedRecord.machine_id).emit('reading:new', finalPersistedRecord);
+        }
+
+        // Broadcast to individual machine rooms for isolation
+        for (const m of activeSubset) {
+            io.to(m.machineId).emit('machine:update', [m]);
+            // Send isolated telemetry sample (basic approximation for realtime chart update)
+            io.to(m.machineId).emit('telemetry:update', {
+                sample: {
+                    time: now.toLocaleTimeString('en-US', { hour12: false }),
+                    avgTemp: m.temperature || 45.0,
+                    maxTemp: m.temperature || 45.0,
+                    vibrationX: m.vibrationX || 1.2,
+                    vibrationY: m.vibrationY || 1.1,
+                    vibrationZ: m.vibrationZ || 1.4,
+                    peakRMS: m.vibration || 1.5,
+                }
+            });
+            // And push isolated dashboard stats update for this specific machine
+             io.to(m.machineId).emit('dashboard:update', {
+                 ...stats,
+                 totalMachines: 1,
+                 healthyMachines: m.status === 'Healthy' ? 1 : 0,
+                 warningMachines: m.status === 'Warning' ? 1 : 0,
+                 criticalMachines: m.status === 'Critical' ? 1 : 0,
+                 avgTemperature: m.temperature,
+                 avgVibration: m.vibration,
+                 runningMachines: m.status !== 'Offline' ? 1 : 0
+             });
         }
       }
     } catch (err) {

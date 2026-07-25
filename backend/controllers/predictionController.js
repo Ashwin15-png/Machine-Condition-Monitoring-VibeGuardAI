@@ -4,7 +4,9 @@ const Prediction = require('../models/Prediction');
 
 const getPredictiveAnalytics = async (req, res) => {
   try {
-    const fleet = await Machine.find({});
+    const { machineId } = req.query;
+    const query = (machineId && machineId !== 'ALL') ? { machineId } : {};
+    const fleet = await Machine.find(query);
     
     // Calculate global RUL based on vibration thresholding against past 50 points
     const predictions = await Promise.all(fleet.map(async (m) => {
