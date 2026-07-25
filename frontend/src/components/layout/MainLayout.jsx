@@ -22,6 +22,25 @@ const MainLayout = () => {
   };
 
   useEffect(() => {
+    const titles = {
+      '/overview': 'VibeGuard AI | Overview',
+      '/dashboard': 'VibeGuard AI | Dashboard',
+      '/machines': 'VibeGuard AI | Machines',
+      '/readings': 'VibeGuard AI | Telemetry Readings',
+      '/readings/new': 'VibeGuard AI | Add Reading',
+      '/alerts': 'VibeGuard AI | Alerts',
+      '/analytics': 'VibeGuard AI | Analytics',
+      '/oee': 'VibeGuard AI | OEE Dashboard',
+      '/maintenance': 'VibeGuard AI | Maintenance',
+      '/history': 'VibeGuard AI | History',
+      '/profile': 'VibeGuard AI | Profile',
+      '/settings': 'VibeGuard AI | Settings',
+    };
+    const title = titles[location.pathname] || 'VibeGuard AI | Industrial Condition Monitoring';
+    document.title = title;
+  }, [location.pathname]);
+
+  useEffect(() => {
     const blob = document.getElementById('magnetic-blob');
     if (!blob) return;
 

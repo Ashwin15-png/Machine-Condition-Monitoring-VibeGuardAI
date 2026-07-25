@@ -39,12 +39,9 @@ export const AppRoutes = () => {
 
           {/* Main SaaS Nested Routes wrapped in MainLayout */}
           <Route element={<ProtectedRoute />}>
-            
-            {/* Overview stands alone without Sidebar */}
-            <Route path="/overview" element={<PlatformOverview />} />
-
             <Route element={<MainLayout />}>
               <Route path="/" element={<Navigate to="/overview" replace />} />
+              <Route path="/overview" element={<PlatformOverview />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/machines" element={<Machines />} />
               <Route path="/readings" element={<Readings />} />

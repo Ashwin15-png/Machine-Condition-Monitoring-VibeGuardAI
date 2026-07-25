@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
+  Compass,
   LayoutDashboard,
   Cpu,
   Activity,
@@ -24,6 +25,7 @@ import Avatar from '../ui/Avatar';
 import { APP_CONFIG } from '../../utils/constants';
 
 const navItems = [
+  { name: 'Overview', path: '/overview', icon: Compass },
   { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
   { name: 'Machines', path: '/machines', icon: Cpu },
   { name: 'Telemetry Readings', path: '/readings', icon: Activity },
@@ -51,8 +53,12 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
     <div className="flex flex-col h-full bg-[var(--sidebar-bg)] border-r border-[var(--sidebar-border)] text-[var(--sidebar-text)] font-sans select-none relative transition-colors duration-300">
       {/* Sidebar Header / Logo */}
       <div className="h-16 px-4 flex items-center justify-between border-b border-[var(--sidebar-border)] shrink-0">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-xl bg-[var(--info)]/20 border border-[var(--info)]/30 flex items-center justify-center text-[var(--info)] shrink-0 shadow-sm shadow-[var(--info)]/10">
+        <div
+          onClick={() => navigate('/overview')}
+          className="flex items-center gap-3 overflow-hidden cursor-pointer group"
+          title="Go to Overview"
+        >
+          <div className="w-10 h-10 rounded-xl bg-[var(--info)]/20 border border-[var(--info)]/30 flex items-center justify-center text-[var(--info)] shrink-0 shadow-sm shadow-[var(--info)]/10 group-hover:scale-105 transition-transform">
             <Zap className="w-5 h-5 animate-pulse" />
           </div>
           {(!isCollapsed || isMobileOpen) && (

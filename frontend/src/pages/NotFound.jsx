@@ -16,8 +16,8 @@ export const NotFound = () => {
       <p className="text-xs text-[var(--text-muted)] max-w-md mt-2 mb-6">
         The requested industrial monitoring path does not exist or has been decommissioned from the system route table.
       </p>
-      <Button variant="primary" icon={Home} onClick={() => navigate('/dashboard')}>
-        Return to Dashboard Overview
+      <Button variant="primary" icon={Home} onClick={() => navigate('/overview')}>
+        Return to Overview
       </Button>
     </div>
   );
