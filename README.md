@@ -25,7 +25,8 @@ An enterprise-grade, real-time machine condition monitoring and predictive maint
 
 ## 🌐 Active Live Deployment & Quick Start Guide
 
-> **Live Production Platform URL:** [https://machine-condition-monitoring-vibe-g.vercel.app](https://machine-condition-monitoring-vibe-g.vercel.app)
+> **Live Production Platform URL:** [https://machine-condition-monitoring-vibe-g.vercel.app](https://machine-condition-monitoring-vibe-g.vercel.app)  
+> 🎥 **Demonstration Video Link:** [https://drive.google.com/file/d/1Ff9ZXOHsEga3rGrKW4nILAjL1OUCAwDF/view?usp=sharing](https://drive.google.com/file/d/1Ff9ZXOHsEga3rGrKW4nILAjL1OUCAwDF/view?usp=sharing)
 
 ### 1️⃣ How to Create an Account (Registration)
 1. Open the active web application at [https://machine-condition-monitoring-vibe-g.vercel.app](https://machine-condition-monitoring-vibe-g.vercel.app).

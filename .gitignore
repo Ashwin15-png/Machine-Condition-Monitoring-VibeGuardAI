@@ -63,7 +63,7 @@ Thumbs.db
 *.temp
 
 # ==========================================
-# Optional Cache
+# Large Video Files (>100MB)
 # ==========================================
-.cache/
-.parcel-cache/
+Demo Video/*.mp4
+*.mp4
