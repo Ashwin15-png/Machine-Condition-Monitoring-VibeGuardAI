@@ -60,7 +60,7 @@ export const Topbar = ({ isCollapsed, toggleSidebar, toggleMobileMenu }) => {
           <input
             type="text"
             placeholder="Search machines, sensors, alerts... (Ctrl+K)"
-            className="w-full pl-10 pr-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--info)]/40 focus:border-[var(--info)]/60 transition-all cursor-text"
+            className="w-full pl-10 pr-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl text-xs leading-5 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--info)]/40 focus:border-[var(--info)]/60 transition-all cursor-text flex items-center h-[38px]"
           />
         </div>
       </div>

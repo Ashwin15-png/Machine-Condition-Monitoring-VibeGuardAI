@@ -31,6 +31,10 @@ export class ErrorBoundary extends React.Component {
           <p className="text-sm text-[var(--text-muted)] max-w-md mt-2 mb-6">
             An unexpected error occurred while processing sensor feeds or rendering the UI dashboard.
           </p>
+          <div className="text-left bg-gray-900 text-red-400 p-4 rounded overflow-auto max-w-3xl mb-4 w-full text-xs font-mono">
+            <strong>{this.state.error && this.state.error.toString()}</strong>
+            <pre className="mt-2 whitespace-pre-wrap">{this.state.error && this.state.error.stack}</pre>
+          </div>
           <Button variant="primary" icon={RefreshCw} onClick={this.handleReload}>
             Reload Application
           </Button>

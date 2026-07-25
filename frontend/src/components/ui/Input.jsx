@@ -30,9 +30,9 @@ export const Input = ({
           id={inputId}
           type={type}
           className={clsx(
-            'w-full rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 text-sm py-2.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-[var(--info)]/80 disabled:opacity-50 disabled:cursor-not-allowed',
+            'w-full rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] text-sm py-2.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--info)]/40 focus:border-[var(--info)]/80 disabled:opacity-50 disabled:cursor-not-allowed leading-relaxed',
             Icon ? 'pl-10' : 'pl-3.5',
-            error ? 'border-[var(--danger)]/80 focus:ring-red-500/50' : 'hover:border-[var(--border)]',
+            error ? 'border-[var(--danger)]/80 focus:ring-[var(--danger)]/40' : 'hover:border-[var(--text-muted)]',
             className
           )}
           {...props}
