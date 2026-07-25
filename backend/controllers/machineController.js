@@ -77,9 +77,140 @@ const deleteMachine = async (req, res) => {
   }
 };
 
+const updateMachine = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const existing = await Machine.findOne({ $or: [{ machineId: id }, { id: id }] });
+    if (!existing) {
+      return res.status(404).json({ success: false, message: 'Machine asset not found' });
+    }
+
+    const updates = { ...req.body };
+    
+    if (updates.id && !updates.machineId) updates.machineId = updates.id;
+    if (updates.machineId && !updates.id) updates.id = updates.machineId;
+
+    if (updates.temperature !== undefined && updates.temperature !== '') {
+      updates.temperature = Number(updates.temperature);
+      if (isNaN(updates.temperature) || updates.temperature < 0 || updates.temperature > 150) {
+        return res.status(400).json({ success: false, message: 'Temperature must be between 0°C and 150°C' });
+      }
+    }
+
+    if (updates.vibration !== undefined && updates.vibration !== '') {
+      updates.vibration = Number(updates.vibration);
+      if (isNaN(updates.vibration) || updates.vibration < 0 || updates.vibration > 20) {
+        return res.status(400).json({ success: false, message: 'Vibration RMS must be between 0 and 20 mm/s' });
+      }
+    }
+
+    if (updates.healthScore !== undefined && updates.healthScore !== '') {
+      updates.healthScore = Number(updates.healthScore);
+      if (isNaN(updates.healthScore) || updates.healthScore < 0 || updates.healthScore > 100) {
+        return res.status(400).json({ success: false, message: 'Health Index must be between 0% and 100%' });
+      }
+    }
+
+    // Auto-calculate health score if temp or vibration changed and healthScore not explicitly set
+    if ((updates.temperature !== undefined || updates.vibration !== undefined) && updates.healthScore === undefined) {
+      const temp = updates.temperature !== undefined ? updates.temperature : existing.temperature;
+      const vib = updates.vibration !== undefined ? updates.vibration : existing.vibration;
+      
+      const tempPenalty = temp > 45 ? Math.min(50, (temp - 45) * 1.2) : 0;
+      const vibPenalty = vib > 1.5 ? Math.min(50, (vib - 1.5) * 12) : 0;
+      updates.healthScore = Math.max(0, Math.min(100, Math.round(100 - tempPenalty - vibPenalty)));
+    }
+
+    // Auto status logic if not explicitly provided
+    if (!updates.status && updates.healthScore !== undefined) {
+      if (updates.healthScore >= 85) updates.status = 'Healthy';
+      else if (updates.healthScore >= 60) updates.status = 'Warning';
+      else updates.status = 'Critical';
+    }
+
+    const updatedMachine = await Machine.findOneAndUpdate(
+      { $or: [{ machineId: id }, { id: id }] },
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
+
+    // Save Audit Log
+    try {
+      const AuditLog = require('../models/AuditLog');
+      await AuditLog.create({
+        action: `Machine Asset Edit (${updatedMachine.machineId})`,
+        user: req.user ? req.user.name : (req.body.editedBy || 'System Engineer'),
+        details: `Updated ${updatedMachine.name} (${updatedMachine.machineId}). Attributes changed: ${Object.keys(updates).join(', ')}`,
+        ipAddress: req.ip || '127.0.0.1',
+      });
+    } catch (auditErr) {
+      console.warn('AuditLog creation notice:', auditErr.message);
+    }
+
+    // Save Telemetry Point if parameters edited
+    if (updates.temperature !== undefined || updates.vibration !== undefined) {
+      try {
+        const Telemetry = require('../models/Telemetry');
+        await Telemetry.create({
+          timestamp: new Date(),
+          machineId: updatedMachine.machineId,
+          temperature: updatedMachine.temperature,
+          vibrationRMS: updatedMachine.vibration,
+          vibrationX: updatedMachine.vibrationX || (updatedMachine.vibration * 0.7),
+          vibrationY: updatedMachine.vibrationY || (updatedMachine.vibration * 0.7),
+          vibrationZ: updatedMachine.vibrationZ || (updatedMachine.vibration * 0.7),
+          pressure: updatedMachine.pressure || 4.5,
+          rpm: updatedMachine.rpm || 1750,
+          voltage: updatedMachine.voltage || 415,
+          current: updatedMachine.current || 12,
+          humidity: updatedMachine.humidity || 45,
+          power: updatedMachine.power || 5.5,
+        });
+      } catch (telErr) {
+        console.warn('Telemetry log notice:', telErr.message);
+      }
+    }
+
+    // Socket.IO broadcast
+    const io = req.app.get('io');
+    if (io) {
+      const allMachines = await Machine.find({});
+      const activeSubset = allMachines.filter(m => m.status !== 'Offline');
+      const validTemps = activeSubset.map(m => m.temperature).filter(t => t != null && !isNaN(t));
+      const validVibs = activeSubset.map(m => m.vibration).filter(v => v != null && !isNaN(v));
+
+      const stats = {
+        totalMachines: allMachines.length,
+        healthyMachines: allMachines.filter(m => m.status === 'Healthy').length,
+        warningMachines: allMachines.filter(m => m.status === 'Warning').length,
+        criticalMachines: allMachines.filter(m => m.status === 'Critical').length,
+        avgTemperature: validTemps.length > 0 ? Number((validTemps.reduce((a, b) => a + b, 0) / validTemps.length).toFixed(1)) : 45.0,
+        avgVibration: validVibs.length > 0 ? Number((validVibs.reduce((a, b) => a + b, 0) / validVibs.length).toFixed(2)) : 1.5,
+        readingsToday: 14280,
+        alertCount: allMachines.filter(m => m.status === 'Critical' || m.status === 'Warning').length,
+        runningMachines: activeSubset.length,
+        overallOEE: 87.5,
+      };
+
+      io.to('ALL').emit('machine:update', allMachines);
+      io.to('ALL').emit('dashboard:update', stats);
+      io.to(updatedMachine.machineId).emit('machine:update', [updatedMachine]);
+    }
+
+    return res.json({
+      success: true,
+      message: 'Machine configuration updated successfully',
+      data: updatedMachine,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getMachines,
   getMachineById,
   createMachine,
+  updateMachine,
   deleteMachine,
 };

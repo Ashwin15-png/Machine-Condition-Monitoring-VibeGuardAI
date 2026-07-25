@@ -13,6 +13,7 @@ import {
   Layers,
   Wifi,
   WifiOff,
+  Edit2,
 } from 'lucide-react';
 import StatCard from '../components/cards/StatCard';
 import StatusCard from '../components/cards/StatusCard';
@@ -25,6 +26,7 @@ import Modal from '../components/ui/Modal';
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import StateWrapper from '../components/ui/StateWrapper';
+import EditMachineModal from '../components/modals/EditMachineModal';
 
 import { useRealtimeDashboard } from '../services/dashboardService';
 import { alertService } from '../services/alertService';
@@ -33,6 +35,7 @@ import { machineService } from '../services/machineService';
 export const Dashboard = () => {
   const { stats, healthPieData, history, fleet, alerts, loading, connected, machineId, setMachineId } = useRealtimeDashboard();
   const [selectedMachine, setSelectedMachine] = useState(null);
+  const [editingMachine, setEditingMachine] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [localFleet, setLocalFleet] = useState(null);
   const [localAlerts, setLocalAlerts] = useState(null);
@@ -270,6 +273,7 @@ export const Dashboard = () => {
         <MachineTable
           machines={displayFleet}
           onView={(m) => setSelectedMachine(m)}
+          onEdit={(m) => setEditingMachine(m)}
           onDelete={handleDeleteMachine}
         />
       </div>
@@ -337,7 +341,18 @@ export const Dashboard = () => {
               </div>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end items-center gap-2 pt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                icon={Edit2}
+                onClick={() => {
+                  setEditingMachine(selectedMachine);
+                  setSelectedMachine(null);
+                }}
+              >
+                Edit Asset Config
+              </Button>
               <Button variant="secondary" size="sm" onClick={() => setSelectedMachine(null)}>
                 Close Telemetry Panel
               </Button>
@@ -345,6 +360,17 @@ export const Dashboard = () => {
           </div>
         )}
       </Modal>
+
+      {/* Edit Machine Modal */}
+      <EditMachineModal
+        isOpen={Boolean(editingMachine)}
+        onClose={() => setEditingMachine(null)}
+        machine={editingMachine}
+        onMachineUpdated={(updated) => {
+          setLocalFleet((prev) => (prev || displayFleet).map((m) => (m.id === updated.id || m.machineId === updated.machineId ? updated : m)));
+          setEditingMachine(null);
+        }}
+      />
     </div>
     </StateWrapper>
   );

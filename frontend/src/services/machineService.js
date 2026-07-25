@@ -13,6 +13,10 @@ export const machineService = {
     const res = await api.post('/machines', machineData);
     return res.data.data;
   },
+  update: async (id, machineData) => {
+    const res = await api.put(`/machines/${id}`, machineData);
+    return res.data.data;
+  },
   delete: async (id) => {
     const res = await api.delete(`/machines/${id}`);
     return res.data;

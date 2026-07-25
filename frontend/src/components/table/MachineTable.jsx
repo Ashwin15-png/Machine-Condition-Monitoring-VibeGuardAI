@@ -17,6 +17,7 @@ import Input from '../ui/Input';
 import EmptyState from '../ui/EmptyState';
 import TableSkeleton from '../ui/Skeleton';
 import ConfirmDialog from '../ui/ConfirmDialog';
+import EditMachineModal from '../modals/EditMachineModal';
 import { formatTemperature, formatVibration } from '../../utils/formatters';
 
 export const MachineTable = ({
@@ -25,6 +26,7 @@ export const MachineTable = ({
   onView,
   onEdit,
   onDelete,
+  onMachineUpdated,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
@@ -33,6 +35,7 @@ export const MachineTable = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [editingMachine, setEditingMachine] = useState(null);
 
   // Filter & Search logic
   const filteredMachines = useMemo(() => {
@@ -253,15 +256,18 @@ export const MachineTable = ({
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => onEdit && onEdit(m)}
-                          className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--warning)] hover:bg-[var(--bg-secondary)] transition-colors"
+                          onClick={() => {
+                            if (onEdit) onEdit(m);
+                            else setEditingMachine(m);
+                          }}
+                          className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--warning)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
                           title="Edit Asset Configuration"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => setDeleteTarget(m)}
-                          className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--danger)] hover:bg-[var(--bg-secondary)] transition-colors"
+                          className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--danger)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
                           title="Decommission Machine"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -314,6 +320,17 @@ export const MachineTable = ({
         title="Decommission Industrial Asset?"
         message={`Are you sure you want to remove ${deleteTarget?.name} (${deleteTarget?.id}) from active condition monitoring?`}
         confirmText="Remove Asset"
+      />
+
+      {/* Edit Machine Modal */}
+      <EditMachineModal
+        isOpen={Boolean(editingMachine)}
+        onClose={() => setEditingMachine(null)}
+        machine={editingMachine}
+        onMachineUpdated={(updated) => {
+          if (onMachineUpdated) onMachineUpdated(updated);
+          setEditingMachine(null);
+        }}
       />
     </div>
   );

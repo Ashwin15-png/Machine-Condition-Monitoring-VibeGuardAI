@@ -7,6 +7,7 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Modal from '../components/ui/Modal';
 import Badge from '../components/ui/Badge';
+import EditMachineModal from '../components/modals/EditMachineModal';
 import { machineService } from '../services/machineService';
 import socket from '../services/socket';
 
@@ -15,6 +16,7 @@ export const Machines = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMachine, setSelectedMachine] = useState(null);
+  const [editingMachine, setEditingMachine] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newMachineForm, setNewMachineForm] = useState({
     name: '',
@@ -136,6 +138,7 @@ export const Machines = () => {
               key={m.id}
               machine={m}
               onViewDetails={(machine) => setSelectedMachine(machine)}
+              onEdit={(machine) => setEditingMachine(machine)}
             />
           ))}
         </div>
@@ -143,6 +146,7 @@ export const Machines = () => {
         <MachineTable
           machines={machines}
           onView={(m) => setSelectedMachine(m)}
+          onEdit={(m) => setEditingMachine(m)}
           onDelete={handleDeleteMachine}
         />
       )}
@@ -222,6 +226,17 @@ export const Machines = () => {
           </div>
         </form>
       </Modal>
+
+      {/* Edit Machine Modal */}
+      <EditMachineModal
+        isOpen={Boolean(editingMachine)}
+        onClose={() => setEditingMachine(null)}
+        machine={editingMachine}
+        onMachineUpdated={(updated) => {
+          setMachines((prev) => prev.map((m) => (m.id === updated.id || m.machineId === updated.machineId ? updated : m)));
+          setEditingMachine(null);
+        }}
+      />
     </div>
   );
 };

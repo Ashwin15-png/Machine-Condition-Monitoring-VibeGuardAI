@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Badge from '../ui/Badge';
-import { Thermometer, Activity, Gauge, MapPin } from 'lucide-react';
+import { Thermometer, Activity, Gauge, MapPin, Edit2 } from 'lucide-react';
 import { formatTemperature, formatVibration } from '../../utils/formatters';
 
-export const StatusCard = ({ machine, onViewDetails }) => {
+export const StatusCard = ({ machine, onViewDetails, onEdit }) => {
   const {
     id,
     name,
@@ -33,7 +33,21 @@ export const StatusCard = ({ machine, onViewDetails }) => {
             <span>{location}</span>
           </p>
         </div>
-        <Badge status={status} dot />
+        <div className="flex items-center gap-1.5">
+          <Badge status={status} dot />
+          {onEdit && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(machine);
+              }}
+              className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--warning)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
+              title="Edit Machine Configuration"
+            >
+              <Edit2 className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[var(--border)] text-xs">
