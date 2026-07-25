@@ -7,7 +7,7 @@ export const PlatformFooter = () => {
     <footer className="border-t border-slate-800/80 bg-slate-950 py-12 px-4 mt-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <div className="w-10 h-10 rounded-xl bg-[var(--info)]/20 border border-[var(--info)]/30 flex items-center justify-center text-[var(--info)]">
             <Zap className="w-5 h-5" />
           </div>
           <div>

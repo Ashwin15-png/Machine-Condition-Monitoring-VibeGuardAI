@@ -10,7 +10,7 @@ export const HeroSection = () => {
   return (
     <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center overflow-hidden">
       {/* Dynamic Background Glow Orbs for Section */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[var(--info)]/10 rounded-full blur-[120px] pointer-events-none" />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -18,7 +18,7 @@ export const HeroSection = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 space-y-6 max-w-4xl"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide uppercase shadow-lg shadow-blue-500/5">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--info)]/10 border border-[var(--info)]/20 text-[var(--info)] text-xs font-semibold tracking-wide uppercase shadow-lg shadow-blue-500/5">
           <Zap className="w-3.5 h-3.5 animate-pulse" />
           Industry 4.0 Real-Time Industrial IoT Monitoring Platform
         </div>

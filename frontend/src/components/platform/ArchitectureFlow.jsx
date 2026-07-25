@@ -5,14 +5,14 @@ import { Cpu, Activity, Database, Server, BarChart3, Bell, Grid, ActivitySquare 
 export const ArchitectureFlow = () => {
   const nodes = [
     { label: 'Industrial Sensors', icon: Cpu, color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/30' },
-    { label: 'Telemetry Collection', icon: ActivitySquare, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' },
-    { label: 'Backend Processing', icon: Server, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
-    { label: 'MongoDB Storage', icon: Database, color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/30' },
-    { label: 'Analytics', icon: BarChart3, color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30' },
+    { label: 'Telemetry Collection', icon: ActivitySquare, color: 'text-[var(--success)]', bg: 'bg-[var(--success)]/10', border: 'border-[var(--success)]/30' },
+    { label: 'Backend Processing', icon: Server, color: 'text-[var(--info)]', bg: 'bg-[var(--info)]/10', border: 'border-[var(--info)]/30' },
+    { label: 'MongoDB Storage', icon: Database, color: 'text-[var(--success)]', bg: 'bg-[var(--success)]/10', border: 'border-[var(--success)]/30' },
+    { label: 'Analytics', icon: BarChart3, color: 'text-[var(--info)]', bg: 'bg-[var(--info)]/10', border: 'border-[var(--info)]/30' },
     { label: 'Socket.IO', icon: Activity, color: 'text-rose-400', bg: 'bg-rose-500/10', border: 'border-rose-500/30' },
-    { label: 'Real-time Dashboard', icon: Grid, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
-    { label: 'Alerts', icon: Bell, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/30' },
-    { label: 'Maintenance Planning', icon: Cpu, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' },
+    { label: 'Real-time Dashboard', icon: Grid, color: 'text-[var(--info)]', bg: 'bg-[var(--info)]/10', border: 'border-[var(--info)]/30' },
+    { label: 'Alerts', icon: Bell, color: 'text-[var(--warning)]', bg: 'bg-[var(--warning)]/10', border: 'border-[var(--warning)]/30' },
+    { label: 'Maintenance Planning', icon: Cpu, color: 'text-[var(--success)]', bg: 'bg-[var(--success)]/10', border: 'border-[var(--success)]/30' },
   ];
 
   return (

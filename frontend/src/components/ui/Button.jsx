@@ -3,12 +3,12 @@ import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 
 const variants = {
-  primary: 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 border border-blue-500/30',
-  secondary: 'bg-[var(--bg-secondary)] hover:bg-slate-700 text-[var(--text-primary)] border border-[var(--border)] shadow-sm',
-  success: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 border border-emerald-500/30',
-  danger: 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/20 border border-red-500/30',
-  outline: 'bg-transparent border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-white',
-  ghost: 'bg-transparent hover:bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)]',
+  primary: 'bg-[var(--info)] hover:bg-[#0097B2] text-white shadow-sm transition-colors border-transparent',
+  secondary: 'bg-[var(--bg-primary)] border border-[var(--border)] hover:bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-sm transition-colors',
+  success: 'bg-[var(--success)] hover:opacity-90 text-white shadow-sm transition-colors border-transparent',
+  danger: 'bg-[var(--danger)] hover:opacity-90 text-white shadow-sm transition-colors border-transparent',
+  outline: 'bg-transparent border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors',
+  ghost: 'bg-transparent hover:bg-[var(--info)]/10 text-[var(--info)] transition-colors',
 };
 
 const sizes = {
@@ -36,7 +36,7 @@ export const Button = ({
       disabled={disabled || loading}
       onClick={onClick}
       className={clsx(
-        'inline-flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer',
+        'inline-flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--info)]/40 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer',
         variants[variant],
         sizes[size],
         className

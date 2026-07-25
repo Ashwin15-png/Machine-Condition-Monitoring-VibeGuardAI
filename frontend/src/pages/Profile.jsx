@@ -29,7 +29,7 @@ export const Profile = () => {
       <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
         <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <User className="w-6 h-6 text-blue-500" />
+          <User className="w-6 h-6 text-[var(--info)]" />
           <span>User Profile & Security Clearance</span>
         </h1>
         <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -47,15 +47,15 @@ export const Profile = () => {
           </div>
           <div className="w-full pt-4 border-t border-[var(--border)] text-xs text-[var(--text-muted)] space-y-2 text-left">
             <p className="flex items-center gap-2">
-              <Building className="w-4 h-4 text-blue-400 shrink-0" />
+              <Building className="w-4 h-4 text-[var(--info)] shrink-0" />
               <span>{user?.department}</span>
             </p>
             <p className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
+              <Shield className="w-4 h-4 text-[var(--success)] shrink-0" />
               <span>{user?.employeeId || 'TEMP-000'}</span>
             </p>
             <p className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-purple-400 shrink-0" />
+              <Phone className="w-4 h-4 text-[var(--info)] shrink-0" />
               <span>{user?.phone || 'Not provided'}</span>
             </p>
             <p className="flex items-center gap-2">
@@ -63,11 +63,11 @@ export const Profile = () => {
               <span>Joined: {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</span>
             </p>
             <p className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+              <Clock className="w-4 h-4 text-[var(--warning)] shrink-0" />
               <span>Last Login: {user?.lastLogin ? new Date(user.lastLogin).toLocaleTimeString() : 'Active Now'}</span>
             </p>
             <p className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-red-400 shrink-0" />
+              <Activity className="w-4 h-4 text-[var(--danger)] shrink-0" />
               <span>Status: {user?.status || 'Active'}</span>
             </p>
           </div>

@@ -20,7 +20,7 @@ export const Settings = () => {
       <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
         <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <SettingsIcon className="w-6 h-6 text-blue-500" />
+          <SettingsIcon className="w-6 h-6 text-[var(--info)]" />
           <span>Platform & Alarm Threshold Settings</span>
         </h1>
         <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -69,7 +69,7 @@ export const Settings = () => {
                 type="checkbox"
                 id="tlsToggle"
                 defaultChecked
-                className="w-4 h-4 rounded bg-[var(--bg-card)] border-[var(--border)] text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 rounded bg-[var(--bg-card)] border-[var(--border)] text-[var(--info)] focus:ring-blue-500"
               />
               <label htmlFor="tlsToggle" className="text-[var(--text-secondary)] font-medium">
                 Enforce MQTTS TLS v1.3 Encryption for Edge Devices

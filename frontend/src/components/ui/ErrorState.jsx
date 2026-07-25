@@ -9,7 +9,7 @@ export const ErrorState = ({
 }) => {
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center rounded-2xl bg-red-950/20 border border-red-900/30 my-4">
-      <div className="p-3.5 rounded-full bg-red-500/10 text-red-400 mb-3 border border-red-500/20">
+      <div className="p-3.5 rounded-full bg-[var(--danger)]/10 text-[var(--danger)] mb-3 border border-[var(--danger)]/20">
         <AlertTriangle className="w-8 h-8" />
       </div>
       <h4 className="text-base font-semibold text-red-200">{title}</h4>

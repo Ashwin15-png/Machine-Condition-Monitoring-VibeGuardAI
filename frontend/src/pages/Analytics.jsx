@@ -73,7 +73,7 @@ export const Analytics = () => {
       <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
         <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <BarChart3 className="w-6 h-6 text-purple-500" />
+          <BarChart3 className="w-6 h-6 text-[var(--info)]" />
           <span>Predictive Analytics & Spectrum Analysis</span>
         </h1>
         <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -83,30 +83,30 @@ export const Analytics = () => {
 
       {/* Live KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-purple-500/30">
+        <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-[var(--info)]/30">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-purple-400 uppercase tracking-wider">Fleet Predicted RUL</span>
-            <Zap className="w-5 h-5 text-purple-400" />
+            <span className="text-xs font-semibold text-[var(--info)] uppercase tracking-wider">Fleet Predicted RUL</span>
+            <Zap className="w-5 h-5 text-[var(--info)]" />
           </div>
           <p className="text-3xl font-bold font-mono text-[var(--text-primary)]">{predictiveData ? predictiveData.systemMeanRul : 4280} Hours</p>
           <p className="text-xs text-[var(--text-muted)] mt-1">Estimated mean time before failure across {total} monitored units</p>
         </Card>
 
-        <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-blue-500/30">
+        <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-[var(--info)]/30">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">Top Risk Machine</span>
-            <Activity className="w-5 h-5 text-blue-400" />
+            <span className="text-xs font-semibold text-[var(--info)] uppercase tracking-wider">Top Risk Machine</span>
+            <Activity className="w-5 h-5 text-[var(--info)]" />
           </div>
           <p className="text-xl font-bold font-mono text-[var(--text-primary)]">{predictiveData && predictiveData.topRiskMachine ? predictiveData.topRiskMachine.machineId : 'N/A'}</p>
           <p className="text-xs text-[var(--text-muted)] mt-1">System failure risk: {predictiveData && predictiveData.topRiskMachine ? predictiveData.topRiskMachine.riskPercent : 0}%</p>
         </Card>
 
-        <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-emerald-500/30">
+        <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-[var(--success)]/30">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Statistical Model AI Anomaly Risk</span>
-            <TrendingUp className="w-5 h-5 text-emerald-400" />
+            <span className="text-xs font-semibold text-[var(--success)] uppercase tracking-wider">Statistical Model AI Anomaly Risk</span>
+            <TrendingUp className="w-5 h-5 text-[var(--success)]" />
           </div>
-          <p className="text-3xl font-bold font-mono text-emerald-400">{predictiveData ? predictiveData.systemMeanRisk : 8}% Mean Risk</p>
+          <p className="text-3xl font-bold font-mono text-[var(--success)]">{predictiveData ? predictiveData.systemMeanRisk : 8}% Mean Risk</p>
           <p className="text-xs text-[var(--text-muted)] mt-1">Statistically derived via dynamic EWMA trending matrices</p>
         </Card>
       </div>
@@ -132,12 +132,12 @@ export const Analytics = () => {
                 <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                   {predictiveData.fleetPredictions.map((p, idx) => (
                     <tr key={idx} className="hover:bg-[var(--bg-secondary)]">
-                      <td className="py-3 px-4 font-mono font-bold text-blue-400">{p.machineId}</td>
+                      <td className="py-3 px-4 font-mono font-bold text-[var(--info)]">{p.machineId}</td>
                       <td className="py-3 px-4 font-mono">{p.currentHealth}%</td>
-                      <td className="py-3 px-4 font-mono text-purple-400">{p.rulHours} hrs</td>
+                      <td className="py-3 px-4 font-mono text-[var(--info)]">{p.rulHours} hrs</td>
                       <td className="py-3 px-4 font-mono">{p.projectedTemp} °C ({p.futureTempTrend})</td>
                       <td className="py-3 px-4 font-mono">{p.projectedVib} mm/s ({p.futureVibTrend})</td>
-                      <td className="py-3 px-4 font-mono font-bold text-red-400">{p.riskPercent}%</td>
+                      <td className="py-3 px-4 font-mono font-bold text-[var(--danger)]">{p.riskPercent}%</td>
                     </tr>
                   ))}
                 </tbody>
@@ -160,10 +160,10 @@ export const Analytics = () => {
             <CardTitle>ISO 10816 Vibration Severity Distribution (Live)</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-xs">
-            <ProgressBar label={`Class A: Good — ${analyticsStats.healthyMachines} machines`} value={classA} color="bg-emerald-500" />
-            <ProgressBar label={`Class B: Acceptable — ${Math.ceil(analyticsStats.warningMachines * 0.6)} machines`} value={classB || 14} color="bg-blue-500" />
-            <ProgressBar label={`Class C: Tolerable — ${Math.floor(analyticsStats.warningMachines * 0.4)} machines`} value={classC || 6} color="bg-amber-500" />
-            <ProgressBar label={`Class D: Unacceptable — ${analyticsStats.criticalMachines} machines`} value={classD || 4} color="bg-red-500" />
+            <ProgressBar label={`Class A: Good — ${analyticsStats.healthyMachines} machines`} value={classA} color="bg-[var(--success)]" />
+            <ProgressBar label={`Class B: Acceptable — ${Math.ceil(analyticsStats.warningMachines * 0.6)} machines`} value={classB || 14} color="bg-[var(--info)]" />
+            <ProgressBar label={`Class C: Tolerable — ${Math.floor(analyticsStats.warningMachines * 0.4)} machines`} value={classC || 6} color="bg-[var(--warning)]" />
+            <ProgressBar label={`Class D: Unacceptable — ${analyticsStats.criticalMachines} machines`} value={classD || 4} color="bg-[var(--danger)]" />
           </CardContent>
         </Card>
 

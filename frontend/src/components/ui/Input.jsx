@@ -30,16 +30,16 @@ export const Input = ({
           id={inputId}
           type={type}
           className={clsx(
-            'w-full rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 text-sm py-2.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/80 disabled:opacity-50 disabled:cursor-not-allowed',
+            'w-full rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 text-sm py-2.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-[var(--info)]/80 disabled:opacity-50 disabled:cursor-not-allowed',
             Icon ? 'pl-10' : 'pl-3.5',
-            error ? 'border-red-500/80 focus:ring-red-500/50' : 'hover:border-[var(--border)]',
+            error ? 'border-[var(--danger)]/80 focus:ring-red-500/50' : 'hover:border-[var(--border)]',
             className
           )}
           {...props}
         />
       </div>
       {error ? (
-        <p className="text-xs text-red-400 mt-1 font-medium">{error}</p>
+        <p className="text-xs text-[var(--danger)] mt-1 font-medium">{error}</p>
       ) : helperText ? (
         <p className="text-xs text-[var(--text-muted)] mt-1">{helperText}</p>
       ) : null}

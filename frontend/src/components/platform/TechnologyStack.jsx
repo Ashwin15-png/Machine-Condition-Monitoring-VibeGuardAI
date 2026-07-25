@@ -7,19 +7,19 @@ export const TechnologyStack = () => {
     {
       title: 'Backend Ecosystem',
       icon: Server,
-      color: 'text-emerald-400',
+      color: 'text-[var(--success)]',
       items: ['Node.js', 'Express', 'MongoDB Atlas', 'Mongoose', 'JWT', 'Socket.IO', 'Helmet', 'Morgan', 'Compression'],
     },
     {
       title: 'Frontend Framework',
       icon: Component,
-      color: 'text-blue-400',
+      color: 'text-[var(--info)]',
       items: ['React', 'Vite', 'Tailwind CSS', 'Recharts', 'Framer Motion'],
     },
     {
       title: 'Database & Storage',
       icon: Database,
-      color: 'text-purple-400',
+      color: 'text-[var(--info)]',
       items: ['MongoDB Atlas', 'Deployment Ready', 'Cloud Persistence'],
     },
     {

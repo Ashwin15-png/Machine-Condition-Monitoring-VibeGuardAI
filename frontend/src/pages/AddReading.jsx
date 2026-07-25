@@ -61,7 +61,7 @@ export const AddReading = () => {
       <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
         <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <PlusCircle className="w-6 h-6 text-blue-500" />
+          <PlusCircle className="w-6 h-6 text-[var(--info)]" />
           <span>Manual Machine Reading Registration</span>
         </h1>
         <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -73,20 +73,20 @@ export const AddReading = () => {
         <div
           className={`p-4 rounded-xl border flex items-start gap-3 text-xs ${
             responseStatus.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-              : 'bg-red-500/10 border-red-500/30 text-red-300'
+              ? 'bg-[var(--success)]/10 border-[var(--success)]/30 text-emerald-300'
+              : 'bg-[var(--danger)]/10 border-[var(--danger)]/30 text-red-300'
           }`}
         >
           {responseStatus.type === 'success' ? (
-            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-[var(--success)] shrink-0 mt-0.5" />
           ) : (
-            <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-[var(--danger)] shrink-0 mt-0.5" />
           )}
           <div className="space-y-1">
             <p className="font-semibold">{responseStatus.message}</p>
             {responseStatus.data && (
               <div className="font-mono text-[11px] text-[var(--text-secondary)] pt-1 space-y-1">
-                <p>Reading ID: <span className="text-blue-400 font-bold">{responseStatus.data.reading_id}</span></p>
+                <p>Reading ID: <span className="text-[var(--info)] font-bold">{responseStatus.data.reading_id}</span></p>
                 <p>Calculated Alert Flag: <Badge variant={responseStatus.data.alert_flag === 'CRITICAL' ? 'danger' : responseStatus.data.alert_flag === 'WARNING' ? 'warning' : 'success'}>{responseStatus.data.alert_flag}</Badge></p>
               </div>
             )}

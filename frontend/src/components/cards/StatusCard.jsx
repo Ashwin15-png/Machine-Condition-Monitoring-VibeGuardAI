@@ -55,7 +55,7 @@ export const StatusCard = ({ machine, onViewDetails }) => {
 
         <div className="bg-[var(--bg-secondary)] p-2.5 rounded-xl border border-[var(--border)]">
           <div className="flex items-center gap-1 text-[var(--text-secondary)] mb-1">
-            <Gauge className="w-3.5 h-3.5 text-purple-400" />
+            <Gauge className="w-3.5 h-3.5 text-[var(--info)]" />
             <span className="text-[10px]">RPM</span>
           </div>
           <p className="font-mono font-bold text-[var(--text-primary)]">{rpm.toLocaleString()}</p>

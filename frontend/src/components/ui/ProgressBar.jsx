@@ -6,7 +6,7 @@ export const ProgressBar = ({
   max = 100,
   label,
   showValue = true,
-  color = 'bg-blue-600',
+  color = 'bg-[var(--info)]',
   className = '',
 }) => {
   const percentage = Math.min(Math.max(0, (value / max) * 100), 100);

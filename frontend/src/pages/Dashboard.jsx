@@ -75,16 +75,16 @@ export const Dashboard = () => {
         <div>
           <Breadcrumb />
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-            <Zap className="w-6 h-6 text-blue-500" />
+            <Zap className="w-6 h-6 text-[var(--info)]" />
             <span>Industrial Fleet Condition Center</span>
             <span
               className={`inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full font-mono font-medium border ml-2 ${
                 connected
-                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                  : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                  ? 'bg-[var(--success)]/10 text-[var(--success)] border-[var(--success)]/30'
+                  : 'bg-[var(--warning)]/10 text-[var(--warning)] border-[var(--warning)]/30'
               }`}
             >
-              {connected ? <Wifi className="w-3 h-3 animate-pulse text-emerald-400" /> : <WifiOff className="w-3 h-3" />}
+              {connected ? <Wifi className="w-3 h-3 animate-pulse text-[var(--success)]" /> : <WifiOff className="w-3 h-3" />}
               {connected ? 'LIVE TELEMETRY STREAM' : 'CONNECTING...'}
             </span>
           </h1>
@@ -221,7 +221,7 @@ export const Dashboard = () => {
           <div>
             <div className="flex items-center justify-between border-b border-[var(--border)] pb-3 mb-4">
               <h3 className="text-base font-semibold text-[var(--text-primary)] flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-400" />
+                <AlertTriangle className="w-4 h-4 text-[var(--warning)]" />
                 <span>Live Industrial Alarm Stream</span>
               </h3>
               <span className="text-xs text-[var(--text-muted)] font-mono flex items-center gap-1">

@@ -25,7 +25,7 @@ export const Breadcrumb = () => {
           <React.Fragment key={to}>
             <ChevronRight className="w-3 h-3 text-slate-600" />
             {isLast ? (
-              <span className="text-blue-400 font-semibold">{name}</span>
+              <span className="text-[var(--info)] font-semibold">{name}</span>
             ) : (
               <Link to={to} className="hover:text-[var(--text-primary)] transition-colors">
                 {name}

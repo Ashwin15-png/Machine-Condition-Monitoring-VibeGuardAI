@@ -1,29 +1,25 @@
 /* DARK MODE */
 [data-theme="dark"] {
-  --bg-primary: #0F172A;
-  --bg-secondary: #1E293B;
-  --bg-card: #1E293B;
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #050505;
+  --bg-card: #161616;
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
 
-  --border: #334155;
+  --border: #2D2D2D;
 
   --shadow: 0 4px 12px rgba(0,0,0,0.5);
 
+  /* Tables Specifics */
+  --table-hover: #1A1A1A;
+  --table-selected: #1E293B;
+
   /* Sidebar Specifics */
-  --sidebar-bg: #1E293B;
-  --sidebar-border: #334155;
-  --sidebar-text: #CBD5E1;
-  --sidebar-active-bg: #0F172A;
-  --sidebar-active-text: #38BDF8;
-  
-  /* Badges - Dark mode overrides for better contrast if needed, but per requirements we maintain contrast > 4.5:1 */
-  --badge-normal-bg: rgba(22, 163, 74, 0.2);
-  --badge-normal-text: #4ADE80;
-  --badge-warning-bg: rgba(245, 158, 11, 0.2);
-  --badge-warning-text: #FBBF24;
-  --badge-critical-bg: rgba(220, 38, 38, 0.2);
-  --badge-critical-text: #F87171;
+  --sidebar-bg: #050505;
+  --sidebar-border: #2D2D2D;
+  --sidebar-text: #FFFFFF;
+  --sidebar-active-bg: #00B8D9;
+  --sidebar-active-text: #FFFFFF;
 }

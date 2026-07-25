@@ -50,7 +50,7 @@ export const DropdownItem = ({ children, icon: Icon, onClick, danger = false, cl
     className={clsx(
       'w-full text-left px-3 py-2 text-xs font-medium rounded-lg flex items-center gap-2.5 transition-colors duration-150',
       danger
-        ? 'text-red-400 hover:bg-red-500/10 hover:text-red-300'
+        ? 'text-[var(--danger)] hover:bg-[var(--danger)]/10 hover:text-red-300'
         : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]',
       className
     )}

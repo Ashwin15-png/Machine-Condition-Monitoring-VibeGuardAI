@@ -20,19 +20,21 @@
   /* Global Fonts */
   --font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   
-  /* Status/Feedback Colors (Consistent across themes for recognition) */
-  --success: #16A34A;
-  --warning: #F59E0B;
-  --danger: #DC2626;
-  --info: #2563EB;
+  /* Status/Feedback Colors */
+  --success: #047857;
+  --warning: #92400E;
+  --danger: #B91C1C;
+  --info: #00B8D9; /* Primary Accent: Aqua Blue */
   
-  /* Badge specific */
-  --badge-normal-bg: #DCFCE7;
-  --badge-normal-text: #166534;
+  /* Badge specific (Hardcoded exact hexes per requirements) */
+  --badge-normal-bg: #ECFDF5;
+  --badge-normal-text: #047857;
   --badge-warning-bg: #FEF3C7;
   --badge-warning-text: #92400E;
   --badge-critical-bg: #FEE2E2;
-  --badge-critical-text: #991B1B;
+  --badge-critical-text: #B91C1C;
+  --badge-offline-bg: #F3F4F6;
+  --badge-offline-text: #374151;
 }
 
 body {

@@ -36,34 +36,34 @@ export const getStatusColor = (status) => {
     case 'online':
     case 'running':
       return {
-        bg: 'bg-emerald-500/10',
-        text: 'text-emerald-400',
-        border: 'border-emerald-500/30',
-        dot: 'bg-emerald-400',
+        bg: 'bg-[var(--badge-normal-bg)]',
+        text: 'text-[var(--badge-normal-text)]',
+        border: 'border-transparent',
+        dot: 'bg-[var(--badge-normal-text)]',
       };
     case 'warning':
     case 'degraded':
       return {
-        bg: 'bg-amber-500/10',
-        text: 'text-amber-400',
-        border: 'border-amber-500/30',
-        dot: 'bg-amber-400',
+        bg: 'bg-[var(--badge-warning-bg)]',
+        text: 'text-[var(--badge-warning-text)]',
+        border: 'border-transparent',
+        dot: 'bg-[var(--badge-warning-text)]',
       };
     case 'critical':
     case 'fault':
     case 'error':
       return {
-        bg: 'bg-red-500/10',
-        text: 'text-red-400',
-        border: 'border-red-500/30',
-        dot: 'bg-red-400',
+        bg: 'bg-[var(--badge-critical-bg)]',
+        text: 'text-[var(--badge-critical-text)]',
+        border: 'border-transparent',
+        dot: 'bg-[var(--badge-critical-text)]',
       };
     default:
       return {
-        bg: 'bg-slate-500/10',
-        text: 'text-slate-400',
-        border: 'border-slate-500/30',
-        dot: 'bg-slate-400',
+        bg: 'bg-[var(--badge-offline-bg)]',
+        text: 'text-[var(--badge-offline-text)]',
+        border: 'border-[var(--border)]',
+        dot: 'bg-[var(--badge-offline-text)]',
       };
   }
 };

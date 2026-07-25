@@ -75,7 +75,7 @@ export const Machines = () => {
         <div>
           <Breadcrumb />
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-            <Cpu className="w-6 h-6 text-blue-500" />
+            <Cpu className="w-6 h-6 text-[var(--info)]" />
             <span>Industrial Asset Registry</span>
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-1">

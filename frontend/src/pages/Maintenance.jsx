@@ -78,7 +78,7 @@ export const Maintenance = () => {
                 <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                   {tasks.map((t, idx) => (
                     <tr key={idx} className="hover:bg-[var(--bg-secondary)]">
-                      <td className="py-3 px-4 font-mono font-bold text-blue-400">{t.maintenanceId}</td>
+                      <td className="py-3 px-4 font-mono font-bold text-[var(--info)]">{t.maintenanceId}</td>
                       <td className="py-3 px-4 font-mono font-bold text-[var(--text-secondary)]">{t.machineId}</td>
                       <td className="py-3 px-4">
                          <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-[var(--bg-secondary)] border gap-1 border-[var(--border)]">

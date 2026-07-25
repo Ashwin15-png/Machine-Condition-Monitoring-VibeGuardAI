@@ -39,8 +39,8 @@ export const Login = () => {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex items-center justify-center p-4 relative overflow-hidden font-sans">
       {/* Dynamic Background Glow Orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[var(--info)]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-[var(--info)]/10 rounded-full blur-3xl pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -50,7 +50,7 @@ export const Login = () => {
       >
         {/* Logo & Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-400 mb-2 shadow-lg shadow-blue-500/10">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[var(--info)]/20 border border-[var(--info)]/30 text-[var(--info)] mb-2 shadow-lg shadow-blue-500/10">
             <Zap className="w-6 h-6 animate-pulse" />
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">{APP_CONFIG.NAME}</h2>
@@ -84,11 +84,11 @@ export const Login = () => {
               <input
                 type="checkbox"
                 defaultChecked
-                className="w-3.5 h-3.5 rounded bg-[var(--bg-card)] border-[var(--border)] text-blue-600 focus:ring-blue-500"
+                className="w-3.5 h-3.5 rounded bg-[var(--bg-card)] border-[var(--border)] text-[var(--info)] focus:ring-blue-500"
               />
               <span>Remember Device</span>
             </label>
-            <a href="#forgot" className="text-blue-400 hover:underline">
+            <a href="#forgot" className="text-[var(--info)] hover:underline">
               Forgot Access Credentials?
             </a>
           </div>
@@ -111,7 +111,7 @@ export const Login = () => {
           <button
             onClick={handleDemoFill}
             type="button"
-            className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-[var(--info)] hover:text-blue-300 font-semibold transition-colors"
           >
             <span>Autofill Demo Engineer Profile</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -121,7 +121,7 @@ export const Login = () => {
         <div className="text-center">
           <p className="text-[12px] text-[var(--text-muted)]">
             Unknown user?{' '}
-            <Link to="/register" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+            <Link to="/register" className="text-[var(--info)] hover:text-blue-300 font-semibold transition-colors">
               Create an account
             </Link>
           </p>

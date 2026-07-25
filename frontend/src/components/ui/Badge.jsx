@@ -20,28 +20,25 @@ export const Badge = ({
   } else {
     switch (variant) {
       case 'primary':
-        styleClasses = 'bg-blue-500/10 text-blue-400 border border-blue-500/30';
-        dotClass = 'bg-blue-400';
+      case 'info':
+        styleClasses = 'bg-[var(--info)]/20 text-[var(--info)] border border-transparent';
+        dotClass = 'bg-[var(--info)]';
         break;
       case 'success':
-        styleClasses = 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30';
-        dotClass = 'bg-emerald-400';
+        styleClasses = 'bg-[var(--badge-normal-bg)] text-[var(--badge-normal-text)] border border-transparent';
+        dotClass = 'bg-[var(--badge-normal-text)]';
         break;
       case 'warning':
-        styleClasses = 'bg-amber-500/10 text-amber-400 border border-amber-500/30';
-        dotClass = 'bg-amber-400';
+        styleClasses = 'bg-[var(--badge-warning-bg)] text-[var(--badge-warning-text)] border border-transparent';
+        dotClass = 'bg-[var(--badge-warning-text)]';
         break;
       case 'danger':
-        styleClasses = 'bg-red-500/10 text-red-400 border border-red-500/30';
-        dotClass = 'bg-red-400';
-        break;
-      case 'info':
-        styleClasses = 'bg-sky-500/10 text-sky-400 border border-sky-500/30';
-        dotClass = 'bg-sky-400';
+        styleClasses = 'bg-[var(--badge-critical-bg)] text-[var(--badge-critical-text)] border border-transparent';
+        dotClass = 'bg-[var(--badge-critical-text)]';
         break;
       default:
-        styleClasses = 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] border border-[var(--border)]';
-        dotClass = 'bg-slate-400';
+        styleClasses = 'bg-[var(--badge-offline-bg)] text-[var(--badge-offline-text)] border border-[var(--border)]';
+        dotClass = 'bg-[var(--badge-offline-text)]';
         break;
     }
   }

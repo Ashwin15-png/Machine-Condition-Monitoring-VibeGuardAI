@@ -17,7 +17,7 @@ export const PlatformOverview = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-blue-500/30 flex flex-col">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-[var(--info)]/30 flex flex-col">
       {/* Platform Header */}
       <header className="sticky top-0 z-50 h-16 bg-[var(--bg-primary)] backdrop-blur-md border-b border-[var(--border)] px-4 md:px-6 flex items-center justify-between transition-all duration-300">
           <div className="flex items-center gap-3">
@@ -27,7 +27,7 @@ export const PlatformOverview = () => {
           </div>
           <button 
              onClick={() => navigate('/dashboard')}
-             className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+             className="text-xs font-semibold text-[var(--info)] hover:text-blue-300 transition-colors"
           >
               Skip Introduction →
           </button>

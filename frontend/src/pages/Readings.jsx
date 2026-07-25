@@ -85,11 +85,11 @@ export const Readings = () => {
       case 'WARNING':
         return <Badge variant="warning">WARNING</Badge>;
       case 'FAULTY':
-        return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">FAULTY</span>;
+        return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[var(--info)]/20 text-[var(--info)] border border-[var(--info)]/30">FAULTY</span>;
       case 'MISSING':
         return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[var(--bg-secondary)] text-[var(--text-muted)] border border-[var(--border)]">MISSING</span>;
       case 'STUCK':
-        return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">STUCK</span>;
+        return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[var(--warning)]/20 text-amber-300 border border-[var(--warning)]/30">STUCK</span>;
       case 'NORMAL':
       default:
         return <Badge variant="success">NORMAL</Badge>;
@@ -100,7 +100,7 @@ export const Readings = () => {
 
   const showToast = (msg, isError = false) => {
     const toast = document.createElement('div');
-    toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-bold shadow-xl transition-opacity z-50 ${isError ? 'bg-red-500 text-white' : 'bg-emerald-500 text-white'}`;
+    toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-bold shadow-xl transition-opacity z-50 ${isError ? 'bg-[var(--danger)] text-white' : 'bg-[var(--success)] text-white'}`;
     toast.innerText = msg;
     document.body.appendChild(toast);
     setTimeout(() => {
@@ -150,7 +150,7 @@ export const Readings = () => {
         <div>
           <Breadcrumb />
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-            <Database className="w-6 h-6 text-blue-500" />
+            <Database className="w-6 h-6 text-[var(--info)]" />
             <span>Machine Condition Readings Vault</span>
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -277,7 +277,7 @@ export const Readings = () => {
 
         <div className="flex items-center justify-between text-xs text-[var(--text-muted)] border-t border-[var(--border)] pt-3">
           <span>Showing <strong className="text-[var(--text-primary)]">{readings.length}</strong> of <strong className="text-[var(--text-primary)]">{totalCount}</strong> recorded condition logs</span>
-          <span className="font-mono text-[11px] text-blue-400">Page {page} of {totalPages}</span>
+          <span className="font-mono text-[11px] text-[var(--info)]">Page {page} of {totalPages}</span>
         </div>
       </Card>
 
@@ -309,18 +309,18 @@ export const Readings = () => {
                     <tr
                       key={r.reading_id || `rdg-${idx}`}
                       className={`hover:bg-[var(--bg-secondary)] transition-colors font-medium ${
-                        isAbnormal ? 'bg-red-500/5' : ''
+                        isAbnormal ? 'bg-[var(--danger)]/5' : ''
                       }`}
                     >
-                      <td className="py-3 px-4 font-mono font-bold text-blue-400">{r.reading_id}</td>
+                      <td className="py-3 px-4 font-mono font-bold text-[var(--info)]">{r.reading_id}</td>
                       <td className="py-3 px-4 font-mono text-[var(--text-secondary)]">{r.machine_id}</td>
                       <td className={`py-3 px-4 text-right font-mono font-bold ${
-                        r.temperature > 78 ? 'text-red-400' : r.temperature > 70 ? 'text-amber-400' : r.temperature === null ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
+                        r.temperature > 78 ? 'text-[var(--danger)]' : r.temperature > 70 ? 'text-[var(--warning)]' : r.temperature === null ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
                       }`}>
                         {r.temperature !== null && r.temperature !== undefined ? `${r.temperature} °C` : <span className="italic text-[var(--text-muted)]">NULL</span>}
                       </td>
                       <td className={`py-3 px-4 text-right font-mono font-bold ${
-                        r.vibration > 6.5 ? 'text-red-400' : r.vibration > 4.5 ? 'text-amber-400' : r.vibration === null ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
+                        r.vibration > 6.5 ? 'text-[var(--danger)]' : r.vibration > 4.5 ? 'text-[var(--warning)]' : r.vibration === null ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
                       }`}>
                         {r.vibration !== null && r.vibration !== undefined ? `${r.vibration} mm/s` : <span className="italic text-[var(--text-muted)]">NULL</span>}
                       </td>

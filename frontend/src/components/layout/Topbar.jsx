@@ -68,7 +68,7 @@ export const Topbar = ({ isCollapsed, toggleSidebar, toggleMobileMenu }) => {
       {/* Right: Date/Time, System Status, Notifications, Theme, Profile */}
       <div className="flex items-center gap-2 md:gap-4">
         {/* System Health Badge */}
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+        <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--badge-normal-bg)] border border-[var(--badge-normal-text)]/20 text-[var(--badge-normal-text)] text-xs font-semibold">
           <CheckCircle2 className="w-4 h-4 animate-pulse" />
           <span>Sensors Telemetry OK</span>
         </div>
@@ -87,7 +87,7 @@ export const Topbar = ({ isCollapsed, toggleSidebar, toggleMobileMenu }) => {
           className="p-2 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] transition-colors border border-transparent hover:border-[var(--border)]"
           title="Toggle Dark / Light Theme"
         >
-          {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-blue-400" />}
+          {theme === 'dark' ? <Sun className="w-4 h-4 text-[var(--warning)]" /> : <Moon className="w-4 h-4 text-[var(--info)]" />}
         </button>
 
         {/* Notifications Dropdown */}
@@ -106,19 +106,19 @@ export const Topbar = ({ isCollapsed, toggleSidebar, toggleMobileMenu }) => {
             <h4 className="text-xs font-semibold text-[var(--text-primary)]">System Alerts (3 New)</h4>
             <button
               onClick={() => navigate('/alerts')}
-              className="text-[10px] text-blue-400 hover:underline"
+              className="text-[10px] text-[var(--info)] hover:underline"
             >
               View All
             </button>
           </div>
-          <div className="py-2 space-y-1 max-h-64 overflow-y-auto">
-            <div className="p-2.5 hover:bg-[var(--bg-secondary)] rounded-lg text-xs cursor-pointer border-l-2 border-red-500">
-              <p className="font-semibold text-red-400">Critical Vibration Alarm</p>
+          <div className="py-2 space-y-1 max-h-64 overflow-y-auto custom-scrollbar">
+            <div className="p-2.5 hover:bg-[var(--bg-secondary)] rounded-lg text-xs cursor-pointer border-l-2 border-[var(--danger)]">
+              <p className="font-semibold text-[var(--danger)]">Critical Vibration Alarm</p>
               <p className="text-[11px] text-[var(--text-muted)] truncate">Cooling Tower Turbine exceeds 7.9 mm/s</p>
               <span className="text-[9px] text-[var(--text-muted)]">2 min ago</span>
             </div>
-            <div className="p-2.5 hover:bg-[var(--bg-secondary)] rounded-lg text-xs cursor-pointer border-l-2 border-amber-500">
-              <p className="font-semibold text-amber-400">High Temp Warning</p>
+            <div className="p-2.5 hover:bg-[var(--bg-secondary)] rounded-lg text-xs cursor-pointer border-l-2 border-[var(--warning)]">
+              <p className="font-semibold text-[var(--warning)]">High Temp Warning</p>
               <p className="text-[11px] text-[var(--text-muted)] truncate">Hydraulic Press fluid temperature rising</p>
               <span className="text-[9px] text-[var(--text-muted)]">14 min ago</span>
             </div>

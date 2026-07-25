@@ -32,7 +32,7 @@ export const StateWrapper = ({
 
   if (loading) {
     return (
-      <div className="w-full h-64 flex flex-col items-center justify-center text-blue-400 space-y-4 bg-[var(--bg-card)] rounded-xl border border-blue-900/40">
+      <div className="w-full h-64 flex flex-col items-center justify-center text-[var(--info)] space-y-4 bg-[var(--bg-card)] rounded-xl border border-blue-900/40">
         <Loader2 className="w-8 h-8 animate-spin" />
         <p className="text-xs font-mono animate-pulse">{loadingMessage}</p>
       </div>
@@ -41,7 +41,7 @@ export const StateWrapper = ({
 
   if (error) {
     return (
-      <div className="w-full min-h-[200px] flex flex-col items-center justify-center text-red-400 space-y-4 bg-red-950/20 rounded-xl border border-red-900/50 p-6 text-center">
+      <div className="w-full min-h-[200px] flex flex-col items-center justify-center text-[var(--danger)] space-y-4 bg-red-950/20 rounded-xl border border-red-900/50 p-6 text-center">
         <AlertCircle className="w-10 h-10" />
         <div className="space-y-1">
           <p className="font-semibold text-red-300">Telemetry Stream Error</p>

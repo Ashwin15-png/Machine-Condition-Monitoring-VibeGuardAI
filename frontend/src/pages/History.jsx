@@ -74,7 +74,7 @@ export const History = () => {
 
     const showToast = (msg, isError = false) => {
         const toast = document.createElement('div');
-        toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-bold shadow-xl transition-opacity z-50 ${isError ? 'bg-red-500 text-white' : 'bg-emerald-500 text-white'}`;
+        toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-bold shadow-xl transition-opacity z-50 ${isError ? 'bg-[var(--danger)] text-white' : 'bg-[var(--success)] text-white'}`;
         toast.innerText = msg;
         document.body.appendChild(toast);
         setTimeout(() => {
@@ -111,7 +111,7 @@ export const History = () => {
         <div>
           <Breadcrumb />
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-            <HistoryIcon className="w-6 h-6 text-blue-500" />
+            <HistoryIcon className="w-6 h-6 text-[var(--info)]" />
             <span>Historical Telemetry Log Vault</span>
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -179,7 +179,7 @@ export const History = () => {
               <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                 {filtered.map((log) => (
                   <tr key={log.id} className="hover:bg-[var(--bg-secondary)] transition-colors font-medium">
-                    <td className="py-3 px-4 font-mono text-blue-400">{log.id}</td>
+                    <td className="py-3 px-4 font-mono text-[var(--info)]">{log.id}</td>
                     <td className="py-3 px-4 font-mono text-[var(--text-secondary)]">{log.timestamp}</td>
                     <td className="py-3 px-4 font-mono text-[var(--text-muted)]">{log.machineId}</td>
                     <td className="py-3 px-4">{log.metric}</td>
@@ -187,10 +187,10 @@ export const History = () => {
                     <td className="py-3 px-4 text-center">
                       <span className={`px-2 py-0.5 rounded-md font-mono text-[11px] ${
                         log.status === 'Normal'
-                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                          ? 'bg-[var(--success)]/10 text-[var(--success)] border border-[var(--success)]/30'
                           : log.status === 'Warning'
-                          ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
-                          : 'bg-red-500/10 text-red-400 border border-red-500/30'
+                          ? 'bg-[var(--warning)]/10 text-[var(--warning)] border border-[var(--warning)]/30'
+                          : 'bg-[var(--danger)]/10 text-[var(--danger)] border border-[var(--danger)]/30'
                       }`}>
                         {log.status}
                       </span>

@@ -38,7 +38,7 @@ const MainLayout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans antialiased selection:bg-[var(--info)] selection:text-white relative overflow-x-hidden">
       <div id="magnetic-blob" />
 
       {/* Mobile Drawer Overlay Backdrop */}

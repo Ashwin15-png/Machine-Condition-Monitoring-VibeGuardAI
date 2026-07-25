@@ -10,12 +10,12 @@ export const ProblemStatement = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="bg-slate-900/60 border border-red-500/20 rounded-3xl p-8 md:p-12 relative overflow-hidden backdrop-blur-md"
+        className="bg-slate-900/60 border border-[var(--danger)]/20 rounded-3xl p-8 md:p-12 relative overflow-hidden backdrop-blur-md"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--danger)]/5 rounded-full blur-3xl" />
         
         <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-          <div className="w-16 h-16 shrink-0 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shadow-xl shadow-red-500/10">
+          <div className="w-16 h-16 shrink-0 rounded-2xl bg-[var(--danger)]/10 border border-[var(--danger)]/20 flex items-center justify-center text-[var(--danger)] shadow-xl shadow-red-500/10">
             <AlertCircle className="w-8 h-8" />
           </div>
           
@@ -28,7 +28,7 @@ export const ProblemStatement = () => {
               <p>
                 Because these organizations traditionally rely on reactive maintenance protocols, unplanned downtime severely impacts throughput. Hidden micro-anomalies—specifically rising vibration envelopes and thermal spikes—often precede catastrophic failures by weeks.
               </p>
-              <p className="font-semibold text-blue-400">
+              <p className="font-semibold text-[var(--info)]">
                 This platform continuously monitors machine health in real-time, enabling early detection and facilitating planned maintenance before fatal breakdowns ever occur!
               </p>
             </div>

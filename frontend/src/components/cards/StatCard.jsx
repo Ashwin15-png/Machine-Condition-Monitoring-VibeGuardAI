@@ -16,29 +16,29 @@ export const StatCard = ({
 }) => {
   const colorMap = {
     blue: {
-      border: 'hover:border-blue-500/50',
+      border: 'hover:border-[var(--info)]/50',
       glow: 'from-blue-500/10 to-transparent',
-      iconBg: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+      iconBg: 'bg-[var(--info)]/10 text-[var(--info)] border-[var(--info)]/30',
     },
     emerald: {
-      border: 'hover:border-emerald-500/50',
+      border: 'hover:border-[var(--success)]/50',
       glow: 'from-emerald-500/10 to-transparent',
-      iconBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+      iconBg: 'bg-[var(--success)]/10 text-[var(--success)] border-[var(--success)]/30',
     },
     amber: {
-      border: 'hover:border-amber-500/50',
+      border: 'hover:border-[var(--warning)]/50',
       glow: 'from-amber-500/10 to-transparent',
-      iconBg: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+      iconBg: 'bg-[var(--warning)]/10 text-[var(--warning)] border-[var(--warning)]/30',
     },
     red: {
-      border: 'hover:border-red-500/50',
+      border: 'hover:border-[var(--danger)]/50',
       glow: 'from-red-500/10 to-transparent',
-      iconBg: 'bg-red-500/10 text-red-400 border-red-500/30',
+      iconBg: 'bg-[var(--danger)]/10 text-[var(--danger)] border-[var(--danger)]/30',
     },
     purple: {
-      border: 'hover:border-purple-500/50',
+      border: 'hover:border-[var(--info)]/50',
       glow: 'from-purple-500/10 to-transparent',
-      iconBg: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+      iconBg: 'bg-[var(--info)]/10 text-[var(--info)] border-[var(--info)]/30',
     },
   };
 

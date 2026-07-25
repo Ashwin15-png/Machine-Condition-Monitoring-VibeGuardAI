@@ -24,7 +24,7 @@ export class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col items-center justify-center p-6 text-center">
-          <div className="p-4 rounded-full bg-red-500/10 text-red-400 border border-red-500/30 mb-4 shadow-xl">
+          <div className="p-4 rounded-full bg-[var(--danger)]/10 text-[var(--danger)] border border-[var(--danger)]/30 mb-4 shadow-xl">
             <AlertOctagon className="w-12 h-12" />
           </div>
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">Application Error Encountered</h1>

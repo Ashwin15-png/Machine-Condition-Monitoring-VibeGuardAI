@@ -32,7 +32,7 @@ td {
 
 tbody tr.table-row:hover,
 tbody tr:hover {
-  background-color: var(--sidebar-active-bg) !important;
+  background-color: var(--table-hover) !important;
 }
 
 /* For dark mode consistency, ensure td takes the right color */
@@ -41,5 +41,5 @@ tbody tr:hover {
 }
 [data-theme="dark"] tbody tr.table-row:hover,
 [data-theme="dark"] tbody tr:hover {
-  background-color: var(--bg-secondary) !important;
+  background-color: var(--table-hover) !important;
 }

@@ -8,7 +8,7 @@ export const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col items-center justify-center p-6 text-center">
-      <div className="p-4 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 mb-4 shadow-xl">
+      <div className="p-4 rounded-full bg-[var(--info)]/10 text-[var(--info)] border border-[var(--info)]/30 mb-4 shadow-xl">
         <AlertOctagon className="w-12 h-12" />
       </div>
       <h1 className="text-4xl font-extrabold text-[var(--text-primary)] font-mono">404</h1>

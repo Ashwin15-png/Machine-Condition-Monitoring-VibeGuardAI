@@ -33,7 +33,7 @@ export const OeeDashboard = () => {
         <div className="border-b border-[var(--border)] pb-5">
           <Breadcrumb />
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-            <PieChart className="w-6 h-6 text-emerald-500" />
+            <PieChart className="w-6 h-6 text-[var(--success)]" />
             <span>Overall Equipment Effectiveness (OEE)</span>
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-1">
@@ -45,7 +45,7 @@ export const OeeDashboard = () => {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card className="bg-[var(--bg-card)] border-[var(--border)]">
-                <div className="flex items-center justify-between mb-3 text-xs text-blue-400 font-semibold uppercase tracking-wider">
+                <div className="flex items-center justify-between mb-3 text-xs text-[var(--info)] font-semibold uppercase tracking-wider">
                   <span>Overall Plant OEE</span>
                   <PieChart className="w-4 h-4" />
                 </div>
@@ -54,29 +54,29 @@ export const OeeDashboard = () => {
               </Card>
 
               <Card className="bg-[var(--bg-card)] border-[var(--border)]">
-                <div className="flex items-center justify-between mb-3 text-xs text-emerald-400 font-semibold uppercase tracking-wider">
+                <div className="flex items-center justify-between mb-3 text-xs text-[var(--success)] font-semibold uppercase tracking-wider">
                   <span>Availability</span>
                   <Activity className="w-4 h-4" />
                 </div>
-                <div className="text-3xl font-bold font-mono text-emerald-400">{data.systemOee.availability}%</div>
+                <div className="text-3xl font-bold font-mono text-[var(--success)]">{data.systemOee.availability}%</div>
                 <p className="text-[10px] text-[var(--text-muted)] mt-1">Target: 90.0% (Operating / Planned)</p>
               </Card>
 
               <Card className="bg-[var(--bg-card)] border-[var(--border)]">
-                <div className="flex items-center justify-between mb-3 text-xs text-purple-400 font-semibold uppercase tracking-wider">
+                <div className="flex items-center justify-between mb-3 text-xs text-[var(--info)] font-semibold uppercase tracking-wider">
                   <span>Performance</span>
                   <Zap className="w-4 h-4" />
                 </div>
-                <div className="text-3xl font-bold font-mono text-purple-400">{data.systemOee.performance}%</div>
+                <div className="text-3xl font-bold font-mono text-[var(--info)]">{data.systemOee.performance}%</div>
                 <p className="text-[10px] text-[var(--text-muted)] mt-1">Target: 95.0% (Actual / Ideal Cycle)</p>
               </Card>
 
               <Card className="bg-[var(--bg-card)] border-[var(--border)]">
-                <div className="flex items-center justify-between mb-3 text-xs text-amber-400 font-semibold uppercase tracking-wider">
+                <div className="flex items-center justify-between mb-3 text-xs text-[var(--warning)] font-semibold uppercase tracking-wider">
                   <span>Quality</span>
                   <TrendingUp className="w-4 h-4" />
                 </div>
-                <div className="text-3xl font-bold font-mono text-amber-400">{data.systemOee.quality}%</div>
+                <div className="text-3xl font-bold font-mono text-[var(--warning)]">{data.systemOee.quality}%</div>
                 <p className="text-[10px] text-[var(--text-muted)] mt-1">Target: 99.9% (Good / Total Parts)</p>
               </Card>
             </div>
@@ -91,9 +91,9 @@ export const OeeDashboard = () => {
                     <thead>
                       <tr className="bg-[var(--bg-card)] border-b border-[var(--border)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                         <th className="py-3 px-4">Machine</th>
-                        <th className="py-3 px-4 text-emerald-400">Availability</th>
-                        <th className="py-3 px-4 text-purple-400">Performance</th>
-                        <th className="py-3 px-4 text-amber-400">Quality</th>
+                        <th className="py-3 px-4 text-[var(--success)]">Availability</th>
+                        <th className="py-3 px-4 text-[var(--info)]">Performance</th>
+                        <th className="py-3 px-4 text-[var(--warning)]">Quality</th>
                         <th className="py-3 px-4 font-bold text-[var(--text-primary)]">Overall OEE</th>
                         <th className="py-3 px-4 text-[var(--text-muted)]">Daily Trajectory</th>
                       </tr>
@@ -101,11 +101,11 @@ export const OeeDashboard = () => {
                     <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)] font-mono">
                       {data.fleetOee.map((m, i) => (
                         <tr key={i} className="hover:bg-[var(--bg-secondary)]">
-                          <td className="py-3 px-4 font-bold text-blue-400 font-sans">{m.machineName} ({m.machineId})</td>
+                          <td className="py-3 px-4 font-bold text-[var(--info)] font-sans">{m.machineName} ({m.machineId})</td>
                           <td className="py-3 px-4">{m.availability}%</td>
                           <td className="py-3 px-4">{m.performance}%</td>
                           <td className="py-3 px-4">{m.quality}%</td>
-                          <td className={`py-3 px-4 font-bold ${m.overall < 60 ? 'text-red-400' : 'text-emerald-400'}`}>{m.overall}%</td>
+                          <td className={`py-3 px-4 font-bold ${m.overall < 60 ? 'text-[var(--danger)]' : 'text-[var(--success)]'}`}>{m.overall}%</td>
                           <td className="py-3 px-4">{m.daily}% vs {m.weekly}% Wk</td>
                         </tr>
                       ))}

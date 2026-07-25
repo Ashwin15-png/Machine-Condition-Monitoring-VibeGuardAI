@@ -52,7 +52,7 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
       {/* Sidebar Header / Logo */}
       <div className="h-16 px-4 flex items-center justify-between border-b border-[var(--sidebar-border)] shrink-0">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0 shadow-lg shadow-blue-500/10">
+          <div className="w-10 h-10 rounded-xl bg-[var(--info)]/20 border border-[var(--info)]/30 flex items-center justify-center text-[var(--info)] shrink-0 shadow-sm shadow-[var(--info)]/10">
             <Zap className="w-5 h-5 animate-pulse" />
           </div>
           {(!isCollapsed || isMobileOpen) && (
@@ -121,7 +121,7 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
               </div>
 
               {item.badge && (!isCollapsed || isMobileOpen) && (
-                <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-red-500/20 text-red-400 border border-red-500/30">
+                <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-[var(--danger)]/10 text-[var(--danger)] border border-[var(--danger)]/30">
                   {item.badge}
                 </span>
               )}

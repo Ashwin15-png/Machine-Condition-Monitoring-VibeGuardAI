@@ -86,7 +86,7 @@ export const Alerts = () => {
         <div>
           <Breadcrumb />
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-            <AlertTriangle className="w-6 h-6 text-red-500" />
+            <AlertTriangle className="w-6 h-6 text-[var(--danger)]" />
             <span>Industrial Alarm & Exception Log</span>
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-1">
