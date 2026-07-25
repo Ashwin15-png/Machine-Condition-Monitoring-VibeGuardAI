@@ -41,11 +41,16 @@ export const Input = ({
           type={effectiveType}
           autoComplete={autoComplete}
           aria-label={ariaLabel || label || props.placeholder || inputId}
+          style={{
+            paddingLeft: Icon ? '60px' : '20px',
+            paddingRight: isPassword || RightIcon ? '55px' : '20px',
+            ...props.style,
+          }}
           className={clsx(
             'w-full h-[56px] rounded-[14px] bg-[#111111] border border-white/10 text-white text-[15px] font-sans transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#06B6D4]/40 focus:border-[#06B6D4] disabled:opacity-50 disabled:cursor-not-allowed leading-relaxed',
             'placeholder:text-white/45 placeholder:text-[15px] placeholder:font-normal',
-            Icon ? 'pl-[60px]' : 'pl-[20px]',
-            isPassword || RightIcon ? 'pr-[55px]' : 'pr-[20px]',
+            Icon ? '!pl-[60px]' : '!pl-[20px]',
+            isPassword || RightIcon ? '!pr-[55px]' : '!pr-[20px]',
             error ? 'border-[var(--danger)] focus:ring-[var(--danger)]/40' : 'hover:border-white/20',
             className
           )}
