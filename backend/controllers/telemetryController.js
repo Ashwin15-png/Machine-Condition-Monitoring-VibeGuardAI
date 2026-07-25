@@ -120,11 +120,13 @@ const exportHistoryLogsCSV = async (req, res) => {
     }));
 
     const json2csvParser = new Parser();
-    const csv = json2csvParser.parse(formattedLogs);
+    const csvData = json2csvParser.parse(formattedLogs);
+    const appHeaderRow = `"VibeGuard AI (⚡) - Industrial Fleet Condition Center"\n"Generated On: ${new Date().toLocaleString()}"\n"Module: Historical Telemetry Log Vault"\n\n`;
+    const finalCsv = appHeaderRow + csvData;
 
     res.header('Content-Type', 'text/csv');
     res.attachment(`History_Log_${dateStr}.csv`);
-    return res.send(csv);
+    return res.send(finalCsv);
   } catch (error) {
     return res.status(500).json({ success: false, message: 'CSV Generation Failed' });
   }

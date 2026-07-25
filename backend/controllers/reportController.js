@@ -51,12 +51,15 @@ const exportCSV = async (req, res) => {
         
         // Remove manual fields to automatically inherit the aggregated array keys
         const json2csvParser = new Parser();
-        const csv = json2csvParser.parse(readings);
+        const csvData = json2csvParser.parse(readings);
+        
+        const appHeaderRow = `"VibeGuard AI (⚡) - Industrial Fleet Condition Center"\n"Generated On: ${new Date().toLocaleString()}"\n"Module: Comprehensive Fleet Condition Report"\n\n`;
+        const finalCsv = appHeaderRow + csvData;
 
         const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
         res.header('Content-Type', 'text/csv');
         res.attachment(`Machine_Condition_Report_${dateStr}.csv`);
-        return res.send(csv);
+        return res.send(finalCsv);
     } catch (err) {
         return res.status(500).json({ success: false, message: 'CSV Generation Failed' });
     }
@@ -67,9 +70,20 @@ const exportJSON = async (req, res) => {
         const { machineId } = req.query;
         const readings = await getReadingsPayload(machineId);
         const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        
+        const payload = {
+            metadata: {
+                appName: 'VibeGuard AI (⚡)',
+                description: 'Industrial Fleet Condition Center - Telemetry Export',
+                generatedOn: new Date().toISOString(),
+                totalRecords: readings.length
+            },
+            data: readings
+        };
+        
         res.header('Content-Type', 'application/json');
         res.attachment(`Machine_Condition_Report_${dateStr}.json`);
-        return res.send(JSON.stringify(readings, null, 2));
+        return res.send(JSON.stringify(payload, null, 2));
     } catch (err) {
         return res.status(500).json({ success: false, message: 'JSON Generation Failed' });
     }
@@ -86,17 +100,31 @@ const exportExcel = async (req, res) => {
         });
         
         if (readings.length > 0) {
+            // App Name & Logo Header Row setup
+            sheet.insertRow(1, ['VibeGuard AI (⚡) - Industrial Fleet Condition Center']);
+            sheet.mergeCells('A1:D1');
+            sheet.getRow(1).font = { bold: true, size: 14, color: { argb: 'FF00B8D9' } };
+            
+            sheet.insertRow(2, [`Report Generated: ${new Date().toLocaleString()}`]);
+            sheet.mergeCells('A2:D2');
+            sheet.getRow(2).font = { italic: true, size: 10 };
+            
+            sheet.insertRow(3, []); // spacer
+
             const headers = Object.keys(readings[0]);
-            sheet.columns = headers.map(h => ({
-                header: h,
+            const headerRow = sheet.insertRow(4, headers);
+            
+            sheet.columns = headers.map((h, i) => ({
+                header: sheet.getRow(4).getCell(i + 1).value, // map explicitly to the 4th row headers
                 key: h,
                 width: h.length < 15 ? 18 : h.length + 5
             }));
             
-            sheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
-            sheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0F172A' } };
+            headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+            headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0A0A0A' } };
 
             readings.forEach(r => sheet.addRow(r));
+            sheet.views = [{ state: 'frozen', ySplit: 4 }]; 
         }
 
         const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -123,12 +151,12 @@ const exportPDF = async (req, res) => {
         res.setHeader('Content-Disposition', `attachment; filename=Machine_Condition_Report_${dateStr}.pdf`);
         doc.pipe(res);
 
-        // Header / Logo Placeholder
-        doc.rect(40, 40, 50, 50).fillAndStroke('#0f172a', '#3b82f6');
-        doc.fillColor('#ffffff').fontSize(10).text('LOGO', 50, 60);
+        // Header / Logo Configuration
+        doc.rect(40, 35, 45, 45).fillAndStroke('#0A0A0A', '#00B8D9');
+        doc.fillColor('#00B8D9').fontSize(22).text('⚡', 52, 48); // Logo icon
 
-        doc.fillColor('#000000').fontSize(16).text('Machine Condition Monitoring for a Small Production Unit', 110, 45);
-        doc.fontSize(10).text(`Report Generated Time: ${new Date().toLocaleString()}`, 110, 65);
+        doc.fillColor('#0A0A0A').fontSize(16).text('VibeGuard AI - Enterprise Telemetry Report', 100, 42);
+        doc.fontSize(10).fillColor('#475569').text(`Report Generated On: ${new Date().toLocaleString()}`, 100, 62);
         
         doc.moveDown(3);
 
