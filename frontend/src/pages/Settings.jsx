@@ -17,13 +17,13 @@ export const Settings = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="border-b border-slate-800/80 pb-5">
+      <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
-        <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
           <SettingsIcon className="w-6 h-6 text-blue-500" />
           <span>Platform & Alarm Threshold Settings</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[var(--text-muted)] mt-1">
           Configure sensor sample rates, MQTT telemetry brokers, and ISO condition alarm boundaries.
         </p>
       </div>
@@ -69,9 +69,9 @@ export const Settings = () => {
                 type="checkbox"
                 id="tlsToggle"
                 defaultChecked
-                className="w-4 h-4 rounded bg-slate-900 border-slate-800 text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 rounded bg-[var(--bg-card)] border-[var(--border)] text-blue-600 focus:ring-blue-500"
               />
-              <label htmlFor="tlsToggle" className="text-slate-300 font-medium">
+              <label htmlFor="tlsToggle" className="text-[var(--text-secondary)] font-medium">
                 Enforce MQTTS TLS v1.3 Encryption for Edge Devices
               </label>
             </div>

@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 
 const variants = {
   primary: 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 border border-blue-500/30',
-  secondary: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 shadow-sm',
+  secondary: 'bg-[var(--bg-secondary)] hover:bg-slate-700 text-[var(--text-primary)] border border-[var(--border)] shadow-sm',
   success: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 border border-emerald-500/30',
   danger: 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/20 border border-red-500/30',
-  outline: 'bg-transparent border border-slate-700 text-slate-300 hover:bg-slate-800/60 hover:text-white',
-  ghost: 'bg-transparent hover:bg-slate-800/60 text-slate-400 hover:text-slate-100',
+  outline: 'bg-transparent border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-white',
+  ghost: 'bg-transparent hover:bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)]',
 };
 
 const sizes = {

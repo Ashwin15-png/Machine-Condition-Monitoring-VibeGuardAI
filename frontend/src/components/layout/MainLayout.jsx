@@ -21,8 +21,26 @@ const MainLayout = () => {
     setIsMobileOpen(false);
   };
 
+  useEffect(() => {
+    const blob = document.getElementById('magnetic-blob');
+    if (!blob) return;
+
+    const handleMouseMove = (e) => {
+      if (!document.body.classList.contains('mouse-active')) {
+        document.body.classList.add('mouse-active');
+      }
+      blob.style.left = `${e.clientX}px`;
+      blob.style.top = `${e.clientY}px`;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-slate-950 text-[#F8FAFC] flex flex-col font-sans antialiased selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans antialiased selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
+      <div id="magnetic-blob" />
+
       {/* Mobile Drawer Overlay Backdrop */}
       <AnimatePresence>
         {isMobileOpen && (
@@ -33,7 +51,7 @@ const MainLayout = () => {
             transition={{ duration: 0.2 }}
             onClick={closeMobileMenu}
             aria-hidden="true"
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
           />
         )}
       </AnimatePresence>

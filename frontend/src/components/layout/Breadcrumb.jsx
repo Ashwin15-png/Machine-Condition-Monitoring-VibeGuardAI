@@ -7,10 +7,10 @@ export const Breadcrumb = () => {
   const pathnames = location.pathname.split('/').filter((x) => x);
 
   return (
-    <nav className="flex items-center gap-2 text-xs text-slate-400 mb-4 font-medium" aria-label="Breadcrumb">
+    <nav className="flex items-center gap-2 text-xs text-[var(--text-muted)] mb-4 font-medium" aria-label="Breadcrumb">
       <Link
         to="/dashboard"
-        className="flex items-center gap-1 hover:text-slate-200 transition-colors"
+        className="flex items-center gap-1 hover:text-[var(--text-primary)] transition-colors"
       >
         <Home className="w-3.5 h-3.5" />
         <span>Home</span>
@@ -27,7 +27,7 @@ export const Breadcrumb = () => {
             {isLast ? (
               <span className="text-blue-400 font-semibold">{name}</span>
             ) : (
-              <Link to={to} className="hover:text-slate-200 transition-colors">
+              <Link to={to} className="hover:text-[var(--text-primary)] transition-colors">
                 {name}
               </Link>
             )}

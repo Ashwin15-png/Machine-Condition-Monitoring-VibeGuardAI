@@ -26,13 +26,13 @@ export const Profile = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="border-b border-slate-800/80 pb-5">
+      <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
-        <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
           <User className="w-6 h-6 text-blue-500" />
           <span>User Profile & Security Clearance</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[var(--text-muted)] mt-1">
           Manage operator authentication credentials, facility assignments, and alert preferences.
         </p>
       </div>
@@ -42,10 +42,10 @@ export const Profile = () => {
         <Card className="md:col-span-1 flex flex-col items-center text-center p-6 space-y-4">
           <Avatar src={user?.avatarUrl} name={user?.name} size="xl" />
           <div>
-            <h3 className="text-lg font-bold text-slate-100">{user?.name}</h3>
-            <p className="text-xs text-slate-400 font-medium">{user?.role}</p>
+            <h3 className="text-lg font-bold text-[var(--text-primary)]">{user?.name}</h3>
+            <p className="text-xs text-[var(--text-muted)] font-medium">{user?.role}</p>
           </div>
-          <div className="w-full pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2 text-left">
+          <div className="w-full pt-4 border-t border-[var(--border)] text-xs text-[var(--text-muted)] space-y-2 text-left">
             <p className="flex items-center gap-2">
               <Building className="w-4 h-4 text-blue-400 shrink-0" />
               <span>{user?.department}</span>
@@ -122,7 +122,7 @@ export const Profile = () => {
                 placeholder="https://..."
               />
 
-              <div className="pt-4 border-t border-slate-800 flex justify-end">
+              <div className="pt-4 border-t border-[var(--border)] flex justify-end">
                 <Button variant="primary" size="sm" icon={Save} type="submit">
                   Save Changes
                 </Button>

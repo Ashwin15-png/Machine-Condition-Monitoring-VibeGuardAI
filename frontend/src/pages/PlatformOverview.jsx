@@ -17,12 +17,12 @@ export const PlatformOverview = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30 flex flex-col">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-blue-500/30 flex flex-col">
       {/* Platform Header */}
-      <header className="sticky top-0 z-50 h-16 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 md:px-6 flex items-center justify-between transition-all duration-300">
+      <header className="sticky top-0 z-50 h-16 bg-[var(--bg-primary)] backdrop-blur-md border-b border-[var(--border)] px-4 md:px-6 flex items-center justify-between transition-all duration-300">
           <div className="flex items-center gap-3">
-              <span className="font-bold text-slate-100 tracking-tight flex items-center gap-2">
-                 VibeGuard AI <span className="hidden sm:inline text-slate-500 font-normal">| Platform Overview</span>
+              <span className="font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
+                 VibeGuard AI <span className="hidden sm:inline text-[var(--text-muted)] font-normal">| Platform Overview</span>
               </span>
           </div>
           <button 

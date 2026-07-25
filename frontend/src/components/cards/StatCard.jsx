@@ -49,7 +49,7 @@ export const StatCard = ({
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={onClick}
       className={clsx(
-        'relative rounded-2xl bg-[#111827]/90 border border-slate-800/80 p-5 backdrop-blur-md shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group',
+        'relative rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-5 backdrop-blur-md shadow-sm transition-all duration-300 overflow-hidden cursor-pointer group card',
         selectedColor.border
       )}
     >
@@ -63,12 +63,12 @@ export const StatCard = ({
 
       <div className="flex items-start justify-between">
         <div className="space-y-1 min-w-0">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider truncate">{title}</p>
+          <p className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider truncate">{title}</p>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold text-slate-100 tracking-tight font-mono">
+            <span className="text-2xl font-bold text-[var(--text-primary)] tracking-tight font-mono">
               {value}
             </span>
-            {unit && <span className="text-xs text-slate-400 font-medium">{unit}</span>}
+            {unit && <span className="text-xs text-[var(--text-muted)] font-medium">{unit}</span>}
           </div>
         </div>
 
@@ -86,16 +86,16 @@ export const StatCard = ({
 
       {/* Footer Trend & Subtitle */}
       {(trend || subtitle) && (
-        <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+        <div className="mt-4 pt-3 border-t border-[var(--border)] flex items-center justify-between text-xs">
           {trend && (
             <div
               className={clsx(
                 'flex items-center gap-1 font-semibold',
                 trend === 'up'
-                  ? 'text-emerald-400'
+                  ? 'text-[var(--success)]'
                   : trend === 'down'
-                  ? 'text-red-400'
-                  : 'text-slate-400'
+                  ? 'text-[var(--danger)]'
+                  : 'text-[var(--text-muted)]'
               )}
             >
               {trend === 'up' ? (
@@ -108,7 +108,7 @@ export const StatCard = ({
               <span>{trendValue}</span>
             </div>
           )}
-          {subtitle && <span className="text-slate-500 font-medium truncate ml-auto">{subtitle}</span>}
+          {subtitle && <span className="text-[var(--text-muted)] font-medium truncate ml-auto">{subtitle}</span>}
         </div>
       )}
     </motion.div>

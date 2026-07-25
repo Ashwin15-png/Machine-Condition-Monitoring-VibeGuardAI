@@ -15,11 +15,11 @@ export const ProgressBar = ({
     <div className={clsx('w-full space-y-1.5', className)}>
       {(label || showValue) && (
         <div className="flex justify-between text-xs font-semibold">
-          {label && <span className="text-slate-400 uppercase tracking-wider">{label}</span>}
-          {showValue && <span className="text-slate-200">{Math.round(percentage)}%</span>}
+          {label && <span className="text-[var(--text-muted)] uppercase tracking-wider">{label}</span>}
+          {showValue && <span className="text-[var(--text-primary)]">{Math.round(percentage)}%</span>}
         </div>
       )}
-      <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden p-0.5 border border-slate-700/40">
+      <div className="w-full h-2 rounded-full bg-[var(--bg-secondary)] overflow-hidden p-0.5 border border-[var(--border)]">
         <div
           className={clsx('h-full rounded-full transition-all duration-500 ease-out', color)}
           style={{ width: `${percentage}%` }}

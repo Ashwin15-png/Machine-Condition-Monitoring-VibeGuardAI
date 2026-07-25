@@ -10,7 +10,7 @@ export const Skeleton = ({ className = '', count = 1, ...props }) => {
         <div
           key={idx}
           className={clsx(
-            'animate-pulse rounded-xl bg-slate-800/60 border border-slate-700/20',
+            'animate-pulse rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)]',
             className
           )}
           {...props}
@@ -21,7 +21,7 @@ export const Skeleton = ({ className = '', count = 1, ...props }) => {
 };
 
 export const CardSkeleton = () => (
-  <div className="rounded-2xl border border-slate-800 bg-[#111827]/90 p-5 space-y-4">
+  <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-5 space-y-4">
     <div className="flex items-center justify-between">
       <Skeleton className="h-4 w-1/3" />
       <Skeleton className="h-8 w-8 rounded-lg" />

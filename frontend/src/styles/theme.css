@@ -1,0 +1,58 @@
+/* ==========================================================================
+   THEME ARCHITECTURE (VIBEGUARD AI)
+   Enterprise-Grade Theme System
+   ========================================================================== */
+
+@import './light.css';
+@import './dark.css';
+@import './tables.css';
+@import './forms.css';
+@import './animations.css';
+
+:root {
+  /* Common Typographical Variables */
+  --text-title: 36px;
+  --text-section: 24px;
+  --text-card: 18px;
+  --text-body: 15px;
+  --text-small: 13px;
+
+  /* Global Fonts */
+  --font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  
+  /* Status/Feedback Colors (Consistent across themes for recognition) */
+  --success: #16A34A;
+  --warning: #F59E0B;
+  --danger: #DC2626;
+  --info: #2563EB;
+  
+  /* Badge specific */
+  --badge-normal-bg: #DCFCE7;
+  --badge-normal-text: #166534;
+  --badge-warning-bg: #FEF3C7;
+  --badge-warning-text: #92400E;
+  --badge-critical-bg: #FEE2E2;
+  --badge-critical-text: #991B1B;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: var(--text-body);
+}
+
+h1 { font-size: var(--text-title); font-weight: 700; }
+h2 { font-size: var(--text-section); font-weight: 600; }
+h3 { font-size: var(--text-card); font-weight: 600; }
+.text-small { font-size: var(--text-small); }
+
+/* Generic Layout Wrapper / Card */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: var(--shadow);
+  color: var(--text-primary);
+}

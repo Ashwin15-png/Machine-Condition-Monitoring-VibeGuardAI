@@ -19,8 +19,10 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('vibe_theme', theme);
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.removeAttribute('data-theme');
     }
   }, [theme]);
 

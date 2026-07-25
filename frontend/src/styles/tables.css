@@ -1,0 +1,45 @@
+/* TABLE STYLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-card);
+  text-align: left;
+}
+
+thead {
+  background-color: var(--bg-secondary);
+}
+
+th {
+  padding: 0.75rem 1rem;
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-body);
+}
+
+/* Row Hover */
+.table-row {
+  transition: all 0.25s ease;
+}
+
+tbody tr.table-row:hover,
+tbody tr:hover {
+  background-color: var(--sidebar-active-bg) !important;
+}
+
+/* For dark mode consistency, ensure td takes the right color */
+[data-theme="dark"] td {
+  color: var(--text-primary);
+}
+[data-theme="dark"] tbody tr.table-row:hover,
+[data-theme="dark"] tbody tr:hover {
+  background-color: var(--bg-secondary) !important;
+}

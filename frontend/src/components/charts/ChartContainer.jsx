@@ -7,7 +7,7 @@ export const ChartContainer = ({ title, subtitle, action, children, className = 
       <CardHeader>
         <div>
           <CardTitle>{title}</CardTitle>
-          {subtitle && <p className="text-xs text-slate-400 mt-0.5">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-[var(--text-muted)] mt-0.5">{subtitle}</p>}
         </div>
         {action && <div>{action}</div>}
       </CardHeader>

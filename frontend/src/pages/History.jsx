@@ -107,14 +107,14 @@ export const History = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
         <div>
           <Breadcrumb />
-          <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
             <HistoryIcon className="w-6 h-6 text-blue-500" />
             <span>Historical Telemetry Log Vault</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             Live-linked audit log of all machine condition readings. Updates in real-time via Socket.IO.
           </p>
         </div>
@@ -132,11 +132,11 @@ export const History = () => {
           <Input type="date" label="To Date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
         </div>
         <div className="w-full sm:w-64">
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Select Asset</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1.5">Select Asset</label>
           <select
             value={selectedMachine}
             onChange={(e) => setSelectedMachine(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3.5 py-2.5 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
           >
             <option value="ALL">All Machines</option>
             <option value="MCH-101">CNC Milling Center Alpha</option>
@@ -147,7 +147,7 @@ export const History = () => {
             <option value="MCH-106">Heavy Duty Induction Motor</option>
           </select>
         </div>
-        <div className="text-xs text-slate-400 font-mono pt-5 shrink-0">
+        <div className="text-xs text-[var(--text-muted)] font-mono pt-5 shrink-0">
           {loading ? 'Loading...' : `${filtered.length} records`}
         </div>
       </Card>
@@ -155,19 +155,19 @@ export const History = () => {
       {/* Telemetry Log Table */}
       <Card>
         {loading ? (
-          <div className="flex items-center justify-center py-16 text-slate-400 text-xs gap-2">
+          <div className="flex items-center justify-center py-16 text-[var(--text-muted)] text-xs gap-2">
             <RefreshCw className="w-4 h-4 animate-spin" />
             Loading telemetry history...
           </div>
         ) : filtered.length === 0 ? (
-          <div className="flex items-center justify-center py-16 text-slate-500 text-xs">
+          <div className="flex items-center justify-center py-16 text-[var(--text-muted)] text-xs">
             No logs found for the selected filter.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr className="bg-[var(--bg-card)] border-b border-[var(--border)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                   <th className="py-3 px-4">Reading ID</th>
                   <th className="py-3 px-4">Timestamp</th>
                   <th className="py-3 px-4">Machine ID</th>
@@ -176,12 +176,12 @@ export const History = () => {
                   <th className="py-3 px-4 text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-200">
+              <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                 {filtered.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-800/40 transition-colors font-medium">
+                  <tr key={log.id} className="hover:bg-[var(--bg-secondary)] transition-colors font-medium">
                     <td className="py-3 px-4 font-mono text-blue-400">{log.id}</td>
-                    <td className="py-3 px-4 font-mono text-slate-300">{log.timestamp}</td>
-                    <td className="py-3 px-4 font-mono text-slate-400">{log.machineId}</td>
+                    <td className="py-3 px-4 font-mono text-[var(--text-secondary)]">{log.timestamp}</td>
+                    <td className="py-3 px-4 font-mono text-[var(--text-muted)]">{log.machineId}</td>
                     <td className="py-3 px-4">{log.metric}</td>
                     <td className="py-3 px-4 text-right font-mono font-bold">{log.val}</td>
                     <td className="py-3 px-4 text-center">

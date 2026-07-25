@@ -40,7 +40,7 @@ export const Badge = ({
         dotClass = 'bg-sky-400';
         break;
       default:
-        styleClasses = 'bg-slate-800 text-slate-300 border border-slate-700/60';
+        styleClasses = 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] border border-[var(--border)]';
         dotClass = 'bg-slate-400';
         break;
     }

@@ -23,12 +23,12 @@ export class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-slate-950 text-[#F8FAFC] flex flex-col items-center justify-center p-6 text-center">
+        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col items-center justify-center p-6 text-center">
           <div className="p-4 rounded-full bg-red-500/10 text-red-400 border border-red-500/30 mb-4 shadow-xl">
             <AlertOctagon className="w-12 h-12" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-100">Application Error Encountered</h1>
-          <p className="text-sm text-slate-400 max-w-md mt-2 mb-6">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">Application Error Encountered</h1>
+          <p className="text-sm text-[var(--text-muted)] max-w-md mt-2 mb-6">
             An unexpected error occurred while processing sensor feeds or rendering the UI dashboard.
           </p>
           <Button variant="primary" icon={RefreshCw} onClick={this.handleReload}>

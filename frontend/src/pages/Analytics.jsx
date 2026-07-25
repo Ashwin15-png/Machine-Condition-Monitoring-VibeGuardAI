@@ -70,13 +70,13 @@ export const Analytics = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="border-b border-slate-800/80 pb-5">
+      <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
-        <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
           <BarChart3 className="w-6 h-6 text-purple-500" />
           <span>Predictive Analytics & Spectrum Analysis</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[var(--text-muted)] mt-1">
           FFT Frequency analysis, remaining useful life (RUL) degradation curves, and ISO 10816 vibration severity standards. Live socket-fed charts.
         </p>
       </div>
@@ -88,8 +88,8 @@ export const Analytics = () => {
             <span className="text-xs font-semibold text-purple-400 uppercase tracking-wider">Fleet Predicted RUL</span>
             <Zap className="w-5 h-5 text-purple-400" />
           </div>
-          <p className="text-3xl font-bold font-mono text-slate-100">{predictiveData ? predictiveData.systemMeanRul : 4280} Hours</p>
-          <p className="text-xs text-slate-400 mt-1">Estimated mean time before failure across {total} monitored units</p>
+          <p className="text-3xl font-bold font-mono text-[var(--text-primary)]">{predictiveData ? predictiveData.systemMeanRul : 4280} Hours</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">Estimated mean time before failure across {total} monitored units</p>
         </Card>
 
         <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-blue-500/30">
@@ -97,8 +97,8 @@ export const Analytics = () => {
             <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">Top Risk Machine</span>
             <Activity className="w-5 h-5 text-blue-400" />
           </div>
-          <p className="text-xl font-bold font-mono text-slate-100">{predictiveData && predictiveData.topRiskMachine ? predictiveData.topRiskMachine.machineId : 'N/A'}</p>
-          <p className="text-xs text-slate-400 mt-1">System failure risk: {predictiveData && predictiveData.topRiskMachine ? predictiveData.topRiskMachine.riskPercent : 0}%</p>
+          <p className="text-xl font-bold font-mono text-[var(--text-primary)]">{predictiveData && predictiveData.topRiskMachine ? predictiveData.topRiskMachine.machineId : 'N/A'}</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">System failure risk: {predictiveData && predictiveData.topRiskMachine ? predictiveData.topRiskMachine.riskPercent : 0}%</p>
         </Card>
 
         <Card className="bg-gradient-to-br from-slate-900 to-slate-950 border-emerald-500/30">
@@ -107,7 +107,7 @@ export const Analytics = () => {
             <TrendingUp className="w-5 h-5 text-emerald-400" />
           </div>
           <p className="text-3xl font-bold font-mono text-emerald-400">{predictiveData ? predictiveData.systemMeanRisk : 8}% Mean Risk</p>
-          <p className="text-xs text-slate-400 mt-1">Statistically derived via dynamic EWMA trending matrices</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">Statistically derived via dynamic EWMA trending matrices</p>
         </Card>
       </div>
 
@@ -120,7 +120,7 @@ export const Analytics = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                  <tr className="bg-[var(--bg-card)] border-b border-[var(--border)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                     <th className="py-3 px-4">Machine</th>
                     <th className="py-3 px-4">Current Health</th>
                     <th className="py-3 px-4">RUL Offset</th>
@@ -129,9 +129,9 @@ export const Analytics = () => {
                     <th className="py-3 px-4">Failure Risk</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-200">
+                <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                   {predictiveData.fleetPredictions.map((p, idx) => (
-                    <tr key={idx} className="hover:bg-slate-800/40">
+                    <tr key={idx} className="hover:bg-[var(--bg-secondary)]">
                       <td className="py-3 px-4 font-mono font-bold text-blue-400">{p.machineId}</td>
                       <td className="py-3 px-4 font-mono">{p.currentHealth}%</td>
                       <td className="py-3 px-4 font-mono text-purple-400">{p.rulHours} hrs</td>

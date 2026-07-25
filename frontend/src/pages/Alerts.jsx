@@ -82,26 +82,26 @@ export const Alerts = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
         <div>
           <Breadcrumb />
-          <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
             <AlertTriangle className="w-6 h-6 text-red-500" />
             <span>Industrial Alarm & Exception Log</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             Active threshold violations, thermal envelope breaches, and operator sign-offs.
           </p>
         </div>
 
         {/* Severity Filter Tabs */}
-        <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs">
+        <div className="flex items-center gap-2 bg-[var(--bg-secondary)] border border-[var(--border)] p-1 rounded-xl text-xs">
           <button
             onClick={() => setSeverityFilter('ALL')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
               severityFilter === 'ALL'
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[var(--info)] text-white shadow-sm'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
             All ({alerts.length})
@@ -110,8 +110,8 @@ export const Alerts = () => {
             onClick={() => setSeverityFilter('CRITICAL')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
               severityFilter === 'CRITICAL'
-                ? 'bg-red-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[var(--danger)] text-white shadow-sm'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
             Critical
@@ -120,8 +120,8 @@ export const Alerts = () => {
             onClick={() => setSeverityFilter('WARNING')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
               severityFilter === 'WARNING'
-                ? 'bg-amber-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[var(--warning)] text-white shadow-sm'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
             Warning
@@ -147,7 +147,7 @@ export const Alerts = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-slate-400">{alertIdStr}</span>
+                    <span className="font-mono font-bold text-[var(--text-muted)]">{alertIdStr}</span>
                     <Badge
                       variant={
                         alert.severity === 'Critical'
@@ -159,11 +159,11 @@ export const Alerts = () => {
                     >
                       {alert.severity}
                     </Badge>
-                    <span className="font-bold text-slate-100 text-sm">{alert.machineName}</span>
-                    <span className="text-slate-500 font-mono">({alert.machineId})</span>
+                    <span className="font-bold text-[var(--text-primary)] text-sm">{alert.machineName}</span>
+                    <span className="text-[var(--text-muted)] font-mono">({alert.machineId})</span>
                   </div>
-                  <p className="text-slate-300">{alert.message || alert.description}</p>
-                  <div className="flex items-center gap-4 text-[11px] text-slate-400">
+                  <p className="text-[var(--text-secondary)]">{alert.message || alert.description}</p>
+                  <div className="flex items-center gap-4 text-[11px] text-[var(--text-muted)]">
                     <span>
                       Timestamp:{' '}
                       {alert.timestamp
@@ -171,7 +171,7 @@ export const Alerts = () => {
                         : 'Real-time'}
                     </span>
                     {alert.acknowledgedBy && (
-                      <span className="text-emerald-400">
+                      <span className="text-[var(--success)]">
                         Ack by: {alert.acknowledgedBy}
                       </span>
                     )}
@@ -200,7 +200,7 @@ export const Alerts = () => {
                     </Button>
                   )}
                   {alert.status === 'Resolved' && (
-                    <span className="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">
+                    <span className="px-3 py-1.5 rounded-lg bg-[var(--success)]/10 text-[var(--success)] border border-[var(--success)]/30 font-semibold">
                       Resolved & Closed
                     </span>
                   )}

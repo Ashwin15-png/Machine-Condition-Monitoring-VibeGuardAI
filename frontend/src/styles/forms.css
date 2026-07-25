@@ -1,0 +1,35 @@
+/* FORM & INPUT STYLES */
+input,
+select,
+textarea {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--text-body);
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s;
+  outline: none;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--info);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+}
+
+/* Dark mode inputs tweak */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: var(--bg-primary); /* slightly darker than card */
+  border-color: var(--border);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+}

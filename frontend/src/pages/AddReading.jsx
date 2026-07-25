@@ -58,13 +58,13 @@ export const AddReading = () => {
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       {/* Header */}
-      <div className="border-b border-slate-800/80 pb-5">
+      <div className="border-b border-[var(--border)] pb-5">
         <Breadcrumb />
-        <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
           <PlusCircle className="w-6 h-6 text-blue-500" />
           <span>Manual Machine Reading Registration</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[var(--text-muted)] mt-1">
           SIH 2026 Practical Assessment Task 2: Submit raw telemetry logs with server-side validation and automated alert_flag calculation.
         </p>
       </div>
@@ -85,7 +85,7 @@ export const AddReading = () => {
           <div className="space-y-1">
             <p className="font-semibold">{responseStatus.message}</p>
             {responseStatus.data && (
-              <div className="font-mono text-[11px] text-slate-300 pt-1 space-y-1">
+              <div className="font-mono text-[11px] text-[var(--text-secondary)] pt-1 space-y-1">
                 <p>Reading ID: <span className="text-blue-400 font-bold">{responseStatus.data.reading_id}</span></p>
                 <p>Calculated Alert Flag: <Badge variant={responseStatus.data.alert_flag === 'CRITICAL' ? 'danger' : responseStatus.data.alert_flag === 'WARNING' ? 'warning' : 'success'}>{responseStatus.data.alert_flag}</Badge></p>
               </div>
@@ -101,14 +101,14 @@ export const AddReading = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4 text-xs">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1.5">
                 Target Machine ID *
               </label>
               <select
                 name="machine_id"
                 value={form.machine_id}
                 onChange={handleChange}
-                className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3.5 py-2.5 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 required
               >
                 <option value="MCH-101">CNC Milling Center Alpha (MCH-101)</option>
@@ -159,7 +159,7 @@ export const AddReading = () => {
             />
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1.5">
                 Engineer Field Remarks & Calibration Notes
               </label>
               <textarea
@@ -168,11 +168,11 @@ export const AddReading = () => {
                 value={form.remarks}
                 onChange={handleChange}
                 placeholder="e.g. Manual thermal gun audit during shift change."
-                className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3.5 py-2 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               ></textarea>
             </div>
 
-            <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+            <div className="pt-4 border-t border-[var(--border)] flex justify-end gap-3">
               <Button variant="primary" size="md" type="submit" loading={loading}>
                 Submit Reading to Backend
               </Button>

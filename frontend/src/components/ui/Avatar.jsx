@@ -22,7 +22,7 @@ export const Avatar = ({ src, name = '', size = 'md', className = '' }) => {
   return (
     <div
       className={clsx(
-        'relative inline-flex items-center justify-center rounded-xl overflow-hidden bg-slate-800 border border-slate-700 text-slate-200 font-semibold shrink-0 shadow-md',
+        'relative inline-flex items-center justify-center rounded-xl overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border)] text-[var(--text-primary)] font-semibold shrink-0 shadow-md',
         sizes[size],
         className
       )}
@@ -40,7 +40,7 @@ export const Avatar = ({ src, name = '', size = 'md', className = '' }) => {
       ) : name ? (
         <span>{getInitials(name)}</span>
       ) : (
-        <User className="w-1/2 h-1/2 text-slate-400" />
+        <User className="w-1/2 h-1/2 text-[var(--text-muted)]" />
       )}
     </div>
   );

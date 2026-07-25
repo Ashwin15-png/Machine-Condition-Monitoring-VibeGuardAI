@@ -36,7 +36,7 @@ export const Modal = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"
+            className="fixed inset-0 bg-[var(--bg-primary)] backdrop-blur-md transition-opacity"
           />
 
           {/* Modal Container */}
@@ -46,21 +46,21 @@ export const Modal = ({
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: 'spring', duration: 0.3, bounce: 0.1 }}
             className={clsx(
-              'relative w-full rounded-2xl bg-[#0F172A] border border-slate-800 shadow-2xl overflow-hidden z-10',
+              'relative w-full rounded-2xl bg-[var(--bg-primary)] border border-[var(--border)] shadow-2xl overflow-hidden z-10',
               maxWidth
             )}
           >
             {/* Header */}
             {(title || showClose) && (
-              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800/80 bg-slate-900/50">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)] bg-[var(--bg-card)]">
                 <div>
-                  {title && <h3 className="text-lg font-semibold text-slate-100">{title}</h3>}
-                  {subtitle && <p className="text-xs text-slate-400 mt-0.5">{subtitle}</p>}
+                  {title && <h3 className="text-lg font-semibold text-[var(--text-primary)]">{title}</h3>}
+                  {subtitle && <p className="text-xs text-[var(--text-muted)] mt-0.5">{subtitle}</p>}
                 </div>
                 {showClose && (
                   <button
                     onClick={onClose}
-                    className="rounded-lg p-1.5 text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors focus:outline-none"
+                    className="rounded-lg p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors focus:outline-none"
                     aria-label="Close modal"
                   >
                     <X className="w-5 h-5" />

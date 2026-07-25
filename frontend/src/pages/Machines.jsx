@@ -71,27 +71,27 @@ export const Machines = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
         <div>
           <Breadcrumb />
-          <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
             <Cpu className="w-6 h-6 text-blue-500" />
             <span>Industrial Asset Registry</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             Manage factory machinery, assigned vibration sensors, and maintenance schedules.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* View Toggle */}
-          <div className="flex items-center bg-slate-900 border border-slate-800 p-1 rounded-xl">
+          <div className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border)] p-1 rounded-xl">
             <button
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all ${
                 viewMode === 'grid'
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-[var(--info)] text-white shadow-md'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
               }`}
             >
               <Grid className="w-4 h-4" />
@@ -101,8 +101,8 @@ export const Machines = () => {
               onClick={() => setViewMode('table')}
               className={`p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all ${
                 viewMode === 'table'
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-[var(--info)] text-white shadow-md'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
               }`}
             >
               <List className="w-4 h-4" />
@@ -156,16 +156,16 @@ export const Machines = () => {
       >
         {selectedMachine && (
           <div className="space-y-4 text-xs">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400">Current Health State:</span>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)]">
+              <span className="text-[var(--text-muted)]">Current Health State:</span>
               <Badge status={selectedMachine.status} dot />
             </div>
-            <div className="space-y-2 text-slate-300">
-              <p><strong className="text-slate-400">Location:</strong> {selectedMachine.location}</p>
-              <p><strong className="text-slate-400">Type:</strong> {selectedMachine.type}</p>
-              <p><strong className="text-slate-400">Sensor ID:</strong> {selectedMachine.sensorId}</p>
-              <p><strong className="text-slate-400">Operator:</strong> {selectedMachine.operator}</p>
-              <p><strong className="text-slate-400">Last Service Date:</strong> {selectedMachine.lastMaintenance}</p>
+            <div className="space-y-2 text-[var(--text-secondary)]">
+              <p><strong className="text-[var(--text-muted)]">Location:</strong> {selectedMachine.location}</p>
+              <p><strong className="text-[var(--text-muted)]">Type:</strong> {selectedMachine.type}</p>
+              <p><strong className="text-[var(--text-muted)]">Sensor ID:</strong> {selectedMachine.sensorId}</p>
+              <p><strong className="text-[var(--text-muted)]">Operator:</strong> {selectedMachine.operator}</p>
+              <p><strong className="text-[var(--text-muted)]">Last Service Date:</strong> {selectedMachine.lastMaintenance}</p>
             </div>
             <div className="flex justify-end pt-2">
               <Button variant="secondary" size="sm" onClick={() => setSelectedMachine(null)}>
@@ -212,7 +212,7 @@ export const Machines = () => {
             onChange={(e) => setNewMachineForm({ ...newMachineForm, sensorId: e.target.value })}
             required
           />
-          <div className="flex justify-end gap-2 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-2 pt-4 border-t border-[var(--border)]">
             <Button variant="secondary" size="sm" onClick={() => setIsAddModalOpen(false)}>
               Cancel
             </Button>

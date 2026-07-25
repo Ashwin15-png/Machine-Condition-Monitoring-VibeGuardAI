@@ -87,7 +87,7 @@ export const Readings = () => {
       case 'FAULTY':
         return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">FAULTY</span>;
       case 'MISSING':
-        return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700">MISSING</span>;
+        return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[var(--bg-secondary)] text-[var(--text-muted)] border border-[var(--border)]">MISSING</span>;
       case 'STUCK':
         return <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">STUCK</span>;
       case 'NORMAL':
@@ -146,14 +146,14 @@ export const Readings = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
         <div>
           <Breadcrumb />
-          <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
             <Database className="w-6 h-6 text-blue-500" />
             <span>Machine Condition Readings Vault</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             SIH 2026 Practical Assessment Task 3: Comprehensive list of machine readings with search, priority ordering, and live telemetry updates.
           </p>
         </div>
@@ -193,13 +193,13 @@ export const Readings = () => {
           />
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1">
               Machine Asset
             </label>
             <select
               value={selectedMachine}
               onChange={(e) => { setSelectedMachine(e.target.value); setPage(1); }}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-2 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             >
               <option value="ALL">All Machines</option>
               <option value="MCH-101">CNC Milling Center Alpha (MCH-101)</option>
@@ -212,13 +212,13 @@ export const Readings = () => {
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1">
               Alert Flag Priority
             </label>
             <select
               value={selectedAlert}
               onChange={(e) => { setSelectedAlert(e.target.value); setPage(1); }}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-2 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             >
               <option value="ALL">All Statuses</option>
               <option value="CRITICAL">Critical</option>
@@ -231,37 +231,37 @@ export const Readings = () => {
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1">
               Start Date
             </label>
             <input
               type="date"
               value={startDate}
               onChange={(e) => { setStartDate(e.target.value); setPage(1); }}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-2 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             />
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1">
               End Date
             </label>
             <input
               type="date"
               value={endDate}
               onChange={(e) => { setEndDate(e.target.value); setPage(1); }}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-2 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             />
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1">
               Sort Order
             </label>
             <select
               value={sortBy}
               onChange={(e) => { setSortBy(e.target.value); setPage(1); }}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-2 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             >
               <option value="priority">Priority (Critical First)</option>
               <option value="date_desc">Newest First</option>
@@ -275,8 +275,8 @@ export const Readings = () => {
           </div>
         </form>
 
-        <div className="flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80 pt-3">
-          <span>Showing <strong className="text-slate-200">{readings.length}</strong> of <strong className="text-slate-200">{totalCount}</strong> recorded condition logs</span>
+        <div className="flex items-center justify-between text-xs text-[var(--text-muted)] border-t border-[var(--border)] pt-3">
+          <span>Showing <strong className="text-[var(--text-primary)]">{readings.length}</strong> of <strong className="text-[var(--text-primary)]">{totalCount}</strong> recorded condition logs</span>
           <span className="font-mono text-[11px] text-blue-400">Page {page} of {totalPages}</span>
         </div>
       </Card>
@@ -292,7 +292,7 @@ export const Readings = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr className="bg-[var(--bg-card)] border-b border-[var(--border)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                   <th className="py-3 px-4">Reading ID</th>
                   <th className="py-3 px-4">Machine ID</th>
                   <th className="py-3 px-4 text-right">Temperature (°C)</th>
@@ -302,33 +302,33 @@ export const Readings = () => {
                   <th className="py-3 px-4">Field Remarks</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-200">
+              <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                 {readings.map((r, idx) => {
                   const isAbnormal = r.alert_flag === 'CRITICAL' || r.alert_flag === 'WARNING' || r.alert_flag === 'FAULTY';
                   return (
                     <tr
                       key={r.reading_id || `rdg-${idx}`}
-                      className={`hover:bg-slate-800/40 transition-colors font-medium ${
+                      className={`hover:bg-[var(--bg-secondary)] transition-colors font-medium ${
                         isAbnormal ? 'bg-red-500/5' : ''
                       }`}
                     >
                       <td className="py-3 px-4 font-mono font-bold text-blue-400">{r.reading_id}</td>
-                      <td className="py-3 px-4 font-mono text-slate-300">{r.machine_id}</td>
+                      <td className="py-3 px-4 font-mono text-[var(--text-secondary)]">{r.machine_id}</td>
                       <td className={`py-3 px-4 text-right font-mono font-bold ${
-                        r.temperature > 78 ? 'text-red-400' : r.temperature > 70 ? 'text-amber-400' : r.temperature === null ? 'text-slate-500' : 'text-slate-200'
+                        r.temperature > 78 ? 'text-red-400' : r.temperature > 70 ? 'text-amber-400' : r.temperature === null ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
                       }`}>
-                        {r.temperature !== null && r.temperature !== undefined ? `${r.temperature} °C` : <span className="italic text-slate-500">NULL</span>}
+                        {r.temperature !== null && r.temperature !== undefined ? `${r.temperature} °C` : <span className="italic text-[var(--text-muted)]">NULL</span>}
                       </td>
                       <td className={`py-3 px-4 text-right font-mono font-bold ${
-                        r.vibration > 6.5 ? 'text-red-400' : r.vibration > 4.5 ? 'text-amber-400' : r.vibration === null ? 'text-slate-500' : 'text-slate-200'
+                        r.vibration > 6.5 ? 'text-red-400' : r.vibration > 4.5 ? 'text-amber-400' : r.vibration === null ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
                       }`}>
-                        {r.vibration !== null && r.vibration !== undefined ? `${r.vibration} mm/s` : <span className="italic text-slate-500">NULL</span>}
+                        {r.vibration !== null && r.vibration !== undefined ? `${r.vibration} mm/s` : <span className="italic text-[var(--text-muted)]">NULL</span>}
                       </td>
                       <td className="py-3 px-4 text-center">{getAlertBadge(r.alert_flag)}</td>
-                      <td className="py-3 px-4 font-mono text-slate-400 text-[11px]">
+                      <td className="py-3 px-4 font-mono text-[var(--text-muted)] text-[11px]">
                         {r.recorded_at ? new Date(r.recorded_at).toLocaleString() : 'N/A'}
                       </td>
-                      <td className="py-3 px-4 text-slate-400 text-[11px] truncate max-w-xs">{r.remarks || '—'}</td>
+                      <td className="py-3 px-4 text-[var(--text-muted)] text-[11px] truncate max-w-xs">{r.remarks || '—'}</td>
                     </tr>
                   );
                 })}
@@ -337,7 +337,7 @@ export const Readings = () => {
           </div>
 
           {/* Pagination Controls */}
-          <div className="flex items-center justify-between p-4 border-t border-slate-800/80">
+          <div className="flex items-center justify-between p-4 border-t border-[var(--border)]">
             <Button
               variant="secondary"
               size="sm"
@@ -347,7 +347,7 @@ export const Readings = () => {
             >
               Previous
             </Button>
-            <span className="text-xs text-slate-400 font-mono">
+            <span className="text-xs text-[var(--text-muted)] font-mono">
               Page {page} of {totalPages}
             </span>
             <Button

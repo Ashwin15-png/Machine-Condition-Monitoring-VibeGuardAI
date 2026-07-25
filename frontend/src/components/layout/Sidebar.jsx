@@ -48,9 +48,9 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-[#0F172A] border-r border-slate-800 text-slate-300 font-sans select-none relative">
+    <div className="flex flex-col h-full bg-[var(--sidebar-bg)] border-r border-[var(--sidebar-border)] text-[var(--sidebar-text)] font-sans select-none relative transition-colors duration-300">
       {/* Sidebar Header / Logo */}
-      <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800/80 shrink-0">
+      <div className="h-16 px-4 flex items-center justify-between border-b border-[var(--sidebar-border)] shrink-0">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0 shadow-lg shadow-blue-500/10">
             <Zap className="w-5 h-5 animate-pulse" />
@@ -62,10 +62,10 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
               transition={{ duration: 0.2 }}
               className="flex flex-col min-w-0"
             >
-              <span className="text-base font-bold text-slate-100 tracking-tight whitespace-nowrap">
+              <span className="text-base font-bold text-[var(--text-primary)] tracking-tight whitespace-nowrap">
                 {APP_CONFIG.NAME}
               </span>
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 truncate">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-[var(--text-muted)] truncate">
                 {APP_CONFIG.COMPANY}
               </span>
             </motion.div>
@@ -76,7 +76,7 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
         {isMobileOpen && (
           <button
             onClick={closeMobileMenu}
-            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-100"
+            className="lg:hidden p-1.5 rounded-lg text-[var(--text-muted)] hover:bg-[var(--sidebar-active-bg)] hover:text-[var(--sidebar-active-text)]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -86,7 +86,7 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
         {!isMobileOpen && (
           <button
             onClick={toggleSidebar}
-            className="hidden lg:flex p-1.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-100 transition-colors"
+            className="hidden lg:flex p-1.5 rounded-lg text-[var(--text-muted)] hover:bg-[var(--sidebar-active-bg)] hover:text-[var(--sidebar-active-text)] transition-colors"
             title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -108,13 +108,13 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
               className={({ isActive }) =>
                 `group flex items-center justify-between px-3 py-2.5 rounded-xl font-medium text-xs transition-all duration-200 ${
                   isActive
-                    ? 'bg-blue-600/15 text-blue-400 border border-blue-500/30 shadow-md shadow-blue-500/5'
-                    : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent'
+                    ? 'bg-[var(--sidebar-active-bg)] text-[var(--sidebar-active-text)] border border-[var(--sidebar-active-text)]/30 shadow-[var(--shadow)]'
+                    : 'text-[var(--sidebar-text)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] border border-transparent'
                 }`
               }
             >
               <div className="flex items-center gap-3 min-w-0">
-                <Icon className={`w-4 h-4 shrink-0 transition-transform duration-200 ${isActive ? 'text-blue-400 scale-110' : 'group-hover:scale-110'}`} />
+                <Icon className={`w-4 h-4 shrink-0 transition-transform duration-200 ${isActive ? 'scale-110 text-[var(--sidebar-active-text)]' : 'group-hover:scale-110'}`} />
                 {(!isCollapsed || isMobileOpen) && (
                   <span className="truncate">{item.name}</span>
                 )}
@@ -131,20 +131,20 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
       </div>
 
       {/* User Card & Logout Footer */}
-      <div className="p-3 border-t border-slate-800/80 bg-slate-900/40 space-y-3 shrink-0">
+      <div className="p-3 border-t border-[var(--sidebar-border)] bg-[var(--bg-secondary)] space-y-3 shrink-0">
         {user && (!isCollapsed || isMobileOpen) && (
-          <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/40 border border-slate-700/30">
+          <div className="flex items-center gap-3 p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border)]">
             <Avatar src={user.avatarUrl} name={user.name} size="sm" />
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold text-slate-200 truncate">{user.name}</p>
-              <p className="text-[10px] text-slate-400 truncate">{user.role}</p>
+              <p className="text-xs font-semibold text-[var(--text-primary)] truncate">{user.name}</p>
+              <p className="text-[10px] text-[var(--text-secondary)] truncate">{user.role}</p>
             </div>
           </div>
         )}
 
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-transparent transition-all duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-[var(--sidebar-text)] hover:bg-[var(--danger)]/10 hover:text-[var(--danger)] hover:border-[var(--danger)]/20 border border-transparent transition-all duration-200"
           title="Sign out of system"
         >
           <LogOut className="w-4 h-4 shrink-0" />
@@ -152,7 +152,7 @@ export const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, closeMobileM
         </button>
 
         {(!isCollapsed || isMobileOpen) && (
-          <div className="pt-2 text-center text-[10px] text-slate-500 border-t border-slate-800/40">
+          <div className="pt-2 text-center text-[10px] text-[var(--text-muted)] border-t border-[var(--sidebar-border)]">
             {APP_CONFIG.VERSION}
           </div>
         )}

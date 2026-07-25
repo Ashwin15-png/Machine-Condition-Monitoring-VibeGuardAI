@@ -1,0 +1,61 @@
+/* ANIMATIONS & CURSOR EFFECTS */
+
+button,
+.card,
+.table-row {
+  transition: all 0.25s ease;
+}
+
+.card {
+  /* Subtle lift on hover */
+  will-change: transform;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .card:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+}
+
+/* Interaction Button Scaling */
+button {
+  cursor: pointer;
+  will-change: transform;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Specific buttons usually have custom transforms, let's limit scale effect */
+button:not(.no-scale):hover {
+  transform: scale(1.03);
+}
+
+/* Magnetic Cursor Blob */
+#magnetic-blob {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  display: none;
+}
+
+/* Reveal Blob on body hover logic mapped in React */
+body.mouse-active #magnetic-blob {
+  display: block;
+}
+
+[data-theme="dark"] #magnetic-blob {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(0,0,0,0) 70%);
+}

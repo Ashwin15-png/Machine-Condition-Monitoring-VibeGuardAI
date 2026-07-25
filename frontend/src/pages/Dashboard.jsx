@@ -71,10 +71,10 @@ export const Dashboard = () => {
     <StateWrapper loading={loading} error={null} empty={false} onRetry={handleRefresh}>
       <div className="space-y-6">
         {/* Page Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
         <div>
           <Breadcrumb />
-          <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
             <Zap className="w-6 h-6 text-blue-500" />
             <span>Industrial Fleet Condition Center</span>
             <span
@@ -88,7 +88,7 @@ export const Dashboard = () => {
               {connected ? 'LIVE TELEMETRY STREAM' : 'CONNECTING...'}
             </span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             Real-time IoT sensor telemetry, predictive vibration spectrum analysis, and thermal envelope monitoring.
           </p>
         </div>
@@ -106,7 +106,7 @@ export const Dashboard = () => {
           <select
             value={machineId}
             onChange={(e) => setMachineId(e.target.value)}
-            className="bg-slate-900 border border-slate-700 text-slate-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 py-1.5 h-[34px] outline-none"
+            className="bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] text-sm rounded-lg focus:ring-[var(--info)] focus:border-[var(--info)] p-2 py-1.5 h-[34px] outline-none"
           >
             <option value="ALL">All Machines (Fleet)</option>
             {displayFleet.map((m) => (
@@ -217,15 +217,15 @@ export const Dashboard = () => {
           <HealthPieChart data={healthPieData} />
         </div>
 
-        <div className="lg:col-span-2 rounded-2xl bg-[#111827]/90 border border-slate-800 p-5 backdrop-blur-md shadow-xl flex flex-col justify-between">
+        <div className="lg:col-span-2 rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-5 backdrop-blur-md flex flex-col justify-between card shadow-sm">
           <div>
-            <div className="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-4">
-              <h3 className="text-base font-semibold text-slate-100 flex items-center gap-2">
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-3 mb-4">
+              <h3 className="text-base font-semibold text-[var(--text-primary)] flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-400" />
                 <span>Live Industrial Alarm Stream</span>
               </h3>
-              <span className="text-xs text-slate-400 font-mono flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span className="text-xs text-[var(--text-muted)] font-mono flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-[var(--success)] animate-ping"></span>
                 Socket.IO Stream Active
               </span>
             </div>
@@ -234,11 +234,11 @@ export const Dashboard = () => {
               {displayAlerts.map((alert, idx) => (
                 <div
                   key={alert.id || alert.alertId || `alt-${idx}`}
-                  className="flex items-start justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors text-xs animate-fadeIn"
+                  className="flex items-start justify-between p-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)] hover:border-[var(--info)] transition-colors text-xs animate-fadeIn"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-slate-400">{alert.id || alert.alertId}</span>
+                       <span className="font-mono font-bold text-[var(--text-muted)]">{alert.id || alert.alertId}</span>
                       <Badge
                         variant={
                           alert.severity === 'Critical'
@@ -250,11 +250,11 @@ export const Dashboard = () => {
                       >
                         {alert.severity}
                       </Badge>
-                      <span className="font-semibold text-slate-200">{alert.machineName}</span>
+                      <span className="font-semibold text-[var(--text-primary)]">{alert.machineName}</span>
                     </div>
-                    <p className="text-slate-300 font-sans">{alert.message || alert.description}</p>
+                    <p className="text-[var(--text-secondary)] font-sans">{alert.message || alert.description}</p>
                   </div>
-                  <span className="text-[10px] text-slate-500 font-mono shrink-0 ml-2">
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono shrink-0 ml-2">
                     {alert.timestamp ? new Date(alert.timestamp).toLocaleTimeString() : 'Just now'}
                   </span>
                 </div>
@@ -266,7 +266,7 @@ export const Dashboard = () => {
 
       {/* Machine Fleet Table Section */}
       <div className="space-y-3">
-        <h3 className="text-lg font-bold text-slate-100">Machine Fleet Inventory</h3>
+        <h3 className="text-lg font-bold text-[var(--text-primary)]">Machine Fleet Inventory</h3>
         <MachineTable
           machines={displayFleet}
           onView={(m) => setSelectedMachine(m)}
@@ -283,56 +283,56 @@ export const Dashboard = () => {
         maxWidth="max-w-2xl"
       >
         {selectedMachine && (
-          <div className="space-y-5 text-xs text-slate-300">
+          <div className="space-y-5 text-xs text-[var(--text-primary)]">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Status</span>
+              <div className="bg-[var(--bg-secondary)] p-3 rounded-xl border border-[var(--border)]">
+                <span className="text-[10px] text-[var(--text-muted)] block">Status</span>
                 <Badge status={selectedMachine.status} dot />
               </div>
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Temperature</span>
-                <span className="font-mono text-sm font-bold text-amber-400">
+              <div className="bg-[var(--bg-secondary)] p-3 rounded-xl border border-[var(--border)]">
+                <span className="text-[10px] text-[var(--text-muted)] block">Temperature</span>
+                <span className="font-mono text-sm font-bold text-[var(--warning)]">
                   {selectedMachine.temperature} °C
                 </span>
               </div>
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Vibration RMS</span>
-                <span className="font-mono text-sm font-bold text-blue-400">
+              <div className="bg-[var(--bg-secondary)] p-3 rounded-xl border border-[var(--border)]">
+                <span className="text-[10px] text-[var(--text-muted)] block">Vibration RMS</span>
+                <span className="font-mono text-sm font-bold text-[var(--info)]">
                   {selectedMachine.vibration} mm/s
                 </span>
               </div>
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Operating Speed</span>
-                <span className="font-mono text-sm font-bold text-purple-400">
+              <div className="bg-[var(--bg-secondary)] p-3 rounded-xl border border-[var(--border)]">
+                <span className="text-[10px] text-[var(--text-muted)] block">Operating Speed</span>
+                <span className="font-mono text-sm font-bold text-[var(--info)]">
                   {selectedMachine.rpm} RPM
                 </span>
               </div>
             </div>
 
-            <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-2">
-              <h4 className="font-semibold text-slate-200">Asset Profile Information</h4>
-              <div className="grid grid-cols-2 gap-2 text-slate-400">
+            <div className="bg-[var(--bg-secondary)] p-4 rounded-xl border border-[var(--border)] space-y-2">
+              <h4 className="font-semibold text-[var(--text-primary)]">Asset Profile Information</h4>
+              <div className="grid grid-cols-2 gap-2 text-[var(--text-secondary)]">
                 <div>
-                  <span className="text-slate-500">Location:</span> {selectedMachine.location}
+                  <span className="text-[var(--text-muted)]">Location:</span> {selectedMachine.location}
                 </div>
                 <div>
-                  <span className="text-slate-500">Machine Type:</span> {selectedMachine.type}
+                  <span className="text-[var(--text-muted)]">Machine Type:</span> {selectedMachine.type}
                 </div>
                 <div>
-                  <span className="text-slate-500">Sensor Hardware ID:</span>{' '}
-                  <span className="font-mono text-slate-300">{selectedMachine.sensorId}</span>
+                  <span className="text-[var(--text-muted)]">Sensor Hardware ID:</span>{' '}
+                  <span className="font-mono text-[var(--text-primary)]">{selectedMachine.sensorId}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500">Assigned Operator:</span>{' '}
+                  <span className="text-[var(--text-muted)]">Assigned Operator:</span>{' '}
                   {selectedMachine.operator}
                 </div>
                 <div>
-                  <span className="text-slate-500">Last Overhaul:</span>{' '}
+                  <span className="text-[var(--text-muted)]">Last Overhaul:</span>{' '}
                   {selectedMachine.lastMaintenance}
                 </div>
                 <div>
-                  <span className="text-slate-500">Condition Score:</span>{' '}
-                  <span className="font-bold text-emerald-400">{selectedMachine.healthScore}%</span>
+                  <span className="text-[var(--text-muted)]">Condition Score:</span>{' '}
+                  <span className="font-bold text-[var(--success)]">{selectedMachine.healthScore}%</span>
                 </div>
               </div>
             </div>

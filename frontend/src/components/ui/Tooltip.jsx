@@ -18,7 +18,7 @@ export const Tooltip = ({ text, children }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.15 }}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[11px] font-medium text-slate-100 bg-slate-900 border border-slate-700/80 rounded-md shadow-xl whitespace-nowrap z-50 pointer-events-none"
+            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[11px] font-medium text-[var(--text-primary)] bg-[var(--bg-card)] border border-[var(--border)] rounded-md shadow-xl whitespace-nowrap z-50 pointer-events-none"
           >
             {text}
           </motion.div>

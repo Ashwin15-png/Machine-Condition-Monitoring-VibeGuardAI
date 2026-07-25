@@ -40,14 +40,14 @@ export const Maintenance = () => {
   return (
     <StateWrapper loading={loading} empty={!loading && tasks.length === 0} onRetry={fetchTasks}>
       <div className="space-y-6">
-        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-slate-800/80 pb-5">
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-[var(--border)] pb-5">
           <div>
             <Breadcrumb />
-            <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
               <Wrench className="w-6 h-6 text-orange-500" />
               <span>Asset Maintenance Operations</span>
             </h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[var(--text-muted)] mt-1">
               Work order management, scheduled inspections, and historic maintenance tracking.
             </p>
           </div>
@@ -65,7 +65,7 @@ export const Maintenance = () => {
              <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                  <tr className="bg-[var(--bg-card)] border-b border-[var(--border)] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
                     <th className="py-3 px-4">Task ID</th>
                     <th className="py-3 px-4">Machine</th>
                     <th className="py-3 px-4">Type</th>
@@ -75,13 +75,13 @@ export const Maintenance = () => {
                     <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-200">
+                <tbody className="divide-y divide-slate-800/60 text-[var(--text-primary)]">
                   {tasks.map((t, idx) => (
-                    <tr key={idx} className="hover:bg-slate-800/40">
+                    <tr key={idx} className="hover:bg-[var(--bg-secondary)]">
                       <td className="py-3 px-4 font-mono font-bold text-blue-400">{t.maintenanceId}</td>
-                      <td className="py-3 px-4 font-mono font-bold text-slate-300">{t.machineId}</td>
+                      <td className="py-3 px-4 font-mono font-bold text-[var(--text-secondary)]">{t.machineId}</td>
                       <td className="py-3 px-4">
-                         <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-slate-800 border gap-1 border-slate-700">
+                         <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-[var(--bg-secondary)] border gap-1 border-[var(--border)]">
                             {t.type}
                          </span>
                       </td>
@@ -97,7 +97,7 @@ export const Maintenance = () => {
                            <Badge variant="default">Scheduled</Badge>
                          )}
                       </td>
-                      <td className="py-3 px-4 truncate max-w-[200px] text-slate-400">{t.notes || '—'}</td>
+                      <td className="py-3 px-4 truncate max-w-[200px] text-[var(--text-muted)]">{t.notes || '—'}</td>
                       <td className="py-3 px-4 text-right">
                          {t.status !== 'Completed' && (
                             <Button variant="outline" size="xs" icon={CheckSquare} onClick={() => markCompleted(t._id)}>

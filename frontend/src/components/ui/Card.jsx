@@ -15,9 +15,9 @@ export const Card = ({
       whileHover={hoverEffect ? { y: -3, transition: { duration: 0.2 } } : {}}
       onClick={onClick}
       className={clsx(
-        'rounded-2xl border border-slate-800/80 p-5 shadow-xl transition-all duration-300 relative overflow-hidden',
-        glass ? 'bg-[#111827]/90 backdrop-blur-md' : 'bg-[#0F172A]',
-        hoverEffect && 'hover:border-slate-700 hover:shadow-2xl hover:shadow-blue-500/5 cursor-pointer',
+        'rounded-2xl border border-[var(--border)] p-5 transition-all duration-300 relative overflow-hidden card',
+        glass ? 'bg-[var(--bg-card)] backdrop-blur-md' : 'bg-[var(--bg-primary)]',
+        hoverEffect && 'hover:border-[var(--info)] hover:shadow-lg hover:shadow-[var(--info)]/10 cursor-pointer',
         className
       )}
       {...props}
@@ -28,13 +28,13 @@ export const Card = ({
 };
 
 export const CardHeader = ({ children, className = '' }) => (
-  <div className={clsx('flex items-center justify-between pb-4 border-b border-slate-800/60 mb-4', className)}>
+  <div className={clsx('flex items-center justify-between pb-4 border-b border-[var(--border)] mb-4', className)}>
     {children}
   </div>
 );
 
 export const CardTitle = ({ children, className = '' }) => (
-  <h3 className={clsx('text-base font-semibold text-slate-100 tracking-tight flex items-center gap-2', className)}>
+  <h3 className={clsx('text-base font-semibold text-[var(--text-primary)] tracking-tight flex items-center gap-2', className)}>
     {children}
   </h3>
 );
