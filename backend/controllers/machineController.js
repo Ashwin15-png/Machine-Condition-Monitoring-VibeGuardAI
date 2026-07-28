@@ -104,6 +104,20 @@ const updateMachine = async (req, res) => {
       }
     }
 
+    if (updates.rpm !== undefined && updates.rpm !== '') {
+      updates.rpm = Number(updates.rpm);
+      if (isNaN(updates.rpm) || updates.rpm < 0 || updates.rpm > 10000) {
+        return res.status(400).json({ success: false, message: 'RPM must be between 0 and 10,000 RPM' });
+      }
+    }
+
+    if (updates.power !== undefined && updates.power !== '') {
+      updates.power = Number(updates.power);
+      if (isNaN(updates.power) || updates.power < 0 || updates.power > 500) {
+        return res.status(400).json({ success: false, message: 'Load / Power must be between 0 and 500 kW' });
+      }
+    }
+
     if (updates.healthScore !== undefined && updates.healthScore !== '') {
       updates.healthScore = Number(updates.healthScore);
       if (isNaN(updates.healthScore) || updates.healthScore < 0 || updates.healthScore > 100) {
@@ -111,14 +125,14 @@ const updateMachine = async (req, res) => {
       }
     }
 
-    // Auto-calculate health score if temp or vibration changed and healthScore not explicitly set
-    if ((updates.temperature !== undefined || updates.vibration !== undefined) && updates.healthScore === undefined) {
+    // Auto-calculate health score if temp, vibration, or rpm changed and healthScore not explicitly set
+    if ((updates.temperature !== undefined || updates.vibration !== undefined || updates.rpm !== undefined) && updates.healthScore === undefined) {
       const temp = updates.temperature !== undefined ? updates.temperature : existing.temperature;
       const vib = updates.vibration !== undefined ? updates.vibration : existing.vibration;
+      const rpmVal = updates.rpm !== undefined ? updates.rpm : existing.rpm;
       
-      const tempPenalty = temp > 45 ? Math.min(50, (temp - 45) * 1.2) : 0;
-      const vibPenalty = vib > 1.5 ? Math.min(50, (vib - 1.5) * 12) : 0;
-      updates.healthScore = Math.max(0, Math.min(100, Math.round(100 - tempPenalty - vibPenalty)));
+      const { calculateHealthScore } = require('../utils/randomWalk');
+      updates.healthScore = calculateHealthScore(temp, vib, rpmVal);
     }
 
     // Auto status logic if not explicitly provided
@@ -148,7 +162,7 @@ const updateMachine = async (req, res) => {
     }
 
     // Save Telemetry Point if parameters edited
-    if (updates.temperature !== undefined || updates.vibration !== undefined) {
+    if (updates.temperature !== undefined || updates.vibration !== undefined || updates.rpm !== undefined || updates.power !== undefined) {
       try {
         const Telemetry = require('../models/Telemetry');
         await Telemetry.create({
@@ -173,11 +187,39 @@ const updateMachine = async (req, res) => {
 
     // Socket.IO broadcast
     const io = req.app.get('io');
+
+    // Process manual edit as telemetry sample through Anomaly Engine (Consecutive Readings Rule)
+    const { processTelemetryForAnomalies, consecutiveCounters, CONSECUTIVE_READINGS_THRESHOLD } = require('../services/anomalyEngine');
+    await processTelemetryForAnomalies(
+      {
+        machineId: updatedMachine.machineId,
+        temperature: updatedMachine.temperature,
+        vibrationRMS: updatedMachine.vibration,
+        rpm: updatedMachine.rpm,
+        power: updatedMachine.power,
+        current: updatedMachine.current || 12,
+        voltage: updatedMachine.voltage || 415,
+      },
+      updatedMachine,
+      io
+    );
+
+    const alertCounters = {
+      temperature: consecutiveCounters[`${updatedMachine.machineId}:temperature`] || 0,
+      vibration: consecutiveCounters[`${updatedMachine.machineId}:vibration`] || 0,
+      current: consecutiveCounters[`${updatedMachine.machineId}:current`] || 0,
+      rpm: consecutiveCounters[`${updatedMachine.machineId}:rpm`] || 0,
+      load: consecutiveCounters[`${updatedMachine.machineId}:load`] || 0,
+      threshold: CONSECUTIVE_READINGS_THRESHOLD,
+    };
+
     if (io) {
+      const Alert = require('../models/Alert');
       const allMachines = await Machine.find({});
       const activeSubset = allMachines.filter(m => m.status !== 'Offline');
       const validTemps = activeSubset.map(m => m.temperature).filter(t => t != null && !isNaN(t));
       const validVibs = activeSubset.map(m => m.vibration).filter(v => v != null && !isNaN(v));
+      const activeAlertsCount = await Alert.countDocuments({ status: 'Active' });
 
       const stats = {
         totalMachines: allMachines.length,
@@ -187,13 +229,14 @@ const updateMachine = async (req, res) => {
         avgTemperature: validTemps.length > 0 ? Number((validTemps.reduce((a, b) => a + b, 0) / validTemps.length).toFixed(1)) : 45.0,
         avgVibration: validVibs.length > 0 ? Number((validVibs.reduce((a, b) => a + b, 0) / validVibs.length).toFixed(2)) : 1.5,
         readingsToday: 14280,
-        alertCount: allMachines.filter(m => m.status === 'Critical' || m.status === 'Warning').length,
+        alertCount: activeAlertsCount || allMachines.filter(m => m.status === 'Critical' || m.status === 'Warning').length,
         runningMachines: activeSubset.length,
         overallOEE: 87.5,
       };
 
       io.to('ALL').emit('machine:update', allMachines);
       io.to('ALL').emit('dashboard:update', stats);
+      io.to('ALL').emit('alert:counter', { machineId: updatedMachine.machineId, alertCounters });
       io.to(updatedMachine.machineId).emit('machine:update', [updatedMachine]);
     }
 
@@ -201,6 +244,7 @@ const updateMachine = async (req, res) => {
       success: true,
       message: 'Machine configuration updated successfully',
       data: updatedMachine,
+      alertCounters,
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

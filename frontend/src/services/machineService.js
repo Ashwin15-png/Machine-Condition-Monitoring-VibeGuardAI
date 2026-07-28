@@ -15,7 +15,10 @@ export const machineService = {
   },
   update: async (id, machineData) => {
     const res = await api.put(`/machines/${id}`, machineData);
-    return res.data.data;
+    return {
+      ...(res.data.data || {}),
+      alertCounters: res.data.alertCounters,
+    };
   },
   delete: async (id) => {
     const res = await api.delete(`/machines/${id}`);

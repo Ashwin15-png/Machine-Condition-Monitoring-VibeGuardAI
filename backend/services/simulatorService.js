@@ -7,7 +7,7 @@ const {
   exponentialMovingAverage,
   validateRange,
 } = require('../utils/randomWalk');
-const { processTelemetryForAnomalies } = require('./anomalyEngine');
+const { processTelemetryForAnomalies, updateConsecutiveCounter } = require('./anomalyEngine');
 
 const mongoose = require('mongoose');
 const Machine = require('../models/Machine');
@@ -276,7 +276,8 @@ async function startTelemetrySimulator(io) {
              );
 
              // Alerts
-             if (dbMachine.status === 'Critical' || dbMachine.status === 'Warning') {
+             const isAbnormalStatus = dbMachine.status === 'Critical' || dbMachine.status === 'Warning';
+             if (updateConsecutiveCounter(dbMachine.machineId, 'statusAlert', isAbnormalStatus)) {
                  const existingAlert = await Alert.findOne({ machineId: dbMachine.machineId, status: 'Active' });
                  if (!existingAlert) {
                      await Alert.create({

@@ -14,6 +14,7 @@ import {
   Wifi,
   WifiOff,
   Edit2,
+  Gauge,
 } from 'lucide-react';
 import StatCard from '../components/cards/StatCard';
 import StatusCard from '../components/cards/StatusCard';
@@ -42,6 +43,11 @@ export const Dashboard = () => {
 
   const displayFleet = localFleet || (fleet && fleet.length > 0 ? fleet : []);
   const displayAlerts = localAlerts || (alerts && alerts.length > 0 ? alerts : []);
+
+  const validRpmList = displayFleet.map((m) => m.rpm).filter((r) => r != null && !isNaN(r));
+  const avgFleetRpm = validRpmList.length > 0
+    ? (validRpmList.reduce((acc, val) => acc + val, 0) / validRpmList.length).toFixed(2)
+    : '0.00';
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -124,8 +130,8 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      {/* Primary KPI Stat Cards Grid (8 Cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Primary KPI Stat Cards Grid (9 Cards) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <StatCard
           title={machineId !== 'ALL' ? 'Selected Machine' : 'Total Machines'}
           value={machineId !== 'ALL' ? 1 : stats.totalMachines}
@@ -175,6 +181,16 @@ export const Dashboard = () => {
           trend="down"
           trendValue="-0.15 mm/s"
           subtitle="ISO 10816 Class II"
+        />
+        <StatCard
+          title="Avg Fleet Speed"
+          value={avgFleetRpm}
+          unit="RPM"
+          icon={Gauge}
+          color="emerald"
+          trend="up"
+          trendValue="Live Sync"
+          subtitle="Nominal 1400–1850"
         />
         <StatCard
           title="Today's Sensor Feeds"

@@ -3,7 +3,8 @@ import Modal from '../ui/Modal';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import { machineService } from '../../services/machineService';
-import { Save, AlertTriangle, CheckCircle2, ShieldAlert } from 'lucide-react';
+import socket from '../../services/socket';
+import { Save, AlertTriangle, CheckCircle2, Sliders, Activity } from 'lucide-react';
 
 export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated }) => {
   const [formData, setFormData] = useState({
@@ -14,18 +15,20 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
     status: 'Healthy',
     temperature: '',
     vibration: '',
+    rpm: '',
+    power: '',
     healthScore: '',
     lastMaintenance: '',
     nextMaintenance: '',
     operator: '',
     sensorId: '',
-    rpm: '',
     pressure: '',
     voltage: '',
     current: '',
     notes: '',
   });
 
+  const [alertCounters, setAlertCounters] = useState(null);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
@@ -40,12 +43,13 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
         status: machine.status || 'Healthy',
         temperature: machine.temperature !== undefined ? machine.temperature : '',
         vibration: machine.vibration !== undefined ? machine.vibration : '',
+        rpm: machine.rpm !== undefined ? machine.rpm : 1750,
+        power: machine.power !== undefined ? machine.power : 5.5,
         healthScore: machine.healthScore !== undefined ? machine.healthScore : '',
         lastMaintenance: machine.lastMaintenance || '',
         nextMaintenance: machine.nextMaintenance || '',
         operator: machine.operator || '',
         sensorId: machine.sensorId || '',
-        rpm: machine.rpm || 1750,
         pressure: machine.pressure || 4.5,
         voltage: machine.voltage || 415,
         current: machine.current || 12,
@@ -53,8 +57,21 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
       });
       setErrors({});
       setToastMessage(null);
+      setAlertCounters(null);
     }
   }, [machine, isOpen]);
+
+  useEffect(() => {
+    const handleCounterUpdate = (data) => {
+      if (machine && (data.machineId === machine.id || data.machineId === machine.machineId)) {
+        setAlertCounters(data.alertCounters);
+      }
+    };
+    socket.on('alert:counter', handleCounterUpdate);
+    return () => {
+      socket.off('alert:counter', handleCounterUpdate);
+    };
+  }, [machine]);
 
   const validate = () => {
     const errs = {};
@@ -69,6 +86,16 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
     const vib = Number(formData.vibration);
     if (formData.vibration !== '' && (isNaN(vib) || vib < 0 || vib > 20)) {
       errs.vibration = 'Vibration RMS must be between 0 and 20 mm/s';
+    }
+
+    const rpmVal = Number(formData.rpm);
+    if (formData.rpm !== '' && (isNaN(rpmVal) || rpmVal < 0 || rpmVal > 10000)) {
+      errs.rpm = 'RPM must be between 0 and 10,000 RPM';
+    }
+
+    const powerVal = Number(formData.power);
+    if (formData.power !== '' && (isNaN(powerVal) || powerVal < 0 || powerVal > 500)) {
+      errs.power = 'Load / Power must be between 0 and 500 kW';
     }
 
     const health = Number(formData.healthScore);
@@ -91,18 +118,21 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
         ...formData,
         temperature: formData.temperature !== '' ? Number(formData.temperature) : undefined,
         vibration: formData.vibration !== '' ? Number(formData.vibration) : undefined,
+        rpm: formData.rpm !== '' ? Number(formData.rpm) : undefined,
+        power: formData.power !== '' ? Number(formData.power) : undefined,
         healthScore: formData.healthScore !== '' ? Number(formData.healthScore) : undefined,
       });
 
-      setToastMessage('Machine asset updated successfully!');
+      if (updated.alertCounters) {
+        setAlertCounters(updated.alertCounters);
+      }
+
+      setToastMessage('Machine telemetry updated! Consecutive reading evaluated.');
       if (onMachineUpdated) {
         onMachineUpdated(updated);
       }
 
-      setTimeout(() => {
-        setLoading(false);
-        onClose();
-      }, 600);
+      setLoading(false);
     } catch (err) {
       setLoading(false);
       const msg = err.response?.data?.message || 'Failed to update machine configuration.';
@@ -114,8 +144,8 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={machine ? `Edit Machine Configuration — ${machine.name} (${machine.id || machine.machineId})` : 'Edit Machine'}
-      subtitle="Modify physical IoT sensor thresholds, telemetry baseline, and asset operational status."
+      title={machine ? `Edit Machine Telemetry — ${machine.name} (${machine.id || machine.machineId})` : 'Edit Machine'}
+      subtitle="Modify physical IoT sensor telemetry values, rotational speed, load, and operational status."
       maxWidth="max-w-2xl"
     >
       <form onSubmit={handleSubmit} className="space-y-4 text-xs">
@@ -133,6 +163,48 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
           </div>
         )}
 
+        {/* Consecutive Readings Alert Counter Verification Panel */}
+        {alertCounters && (
+          <div className="p-3.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--info)]/40 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-[var(--info)] flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                <Activity className="w-3.5 h-3.5 text-[var(--info)]" />
+                <span>Consecutive Alert Counter (Verification Mode)</span>
+              </span>
+              <span className="font-mono text-[11px] text-[var(--text-muted)] bg-[var(--bg-primary)] px-2 py-0.5 rounded border border-[var(--border)] font-semibold">
+                Required Target: <strong className="text-[var(--info)]">{alertCounters.threshold || 3}</strong> Readings
+              </span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <div className="p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border)] text-center">
+                <span className="text-[var(--text-muted)] text-[10px] block font-semibold">Temp Counter</span>
+                <span className={`font-mono font-bold text-sm ${alertCounters.temperature >= alertCounters.threshold ? 'text-[var(--danger)]' : alertCounters.temperature > 0 ? 'text-[var(--warning)]' : 'text-[var(--success)]'}`}>
+                  {alertCounters.temperature} / {alertCounters.threshold || 3}
+                </span>
+              </div>
+              <div className="p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border)] text-center">
+                <span className="text-[var(--text-muted)] text-[10px] block font-semibold">Vibration Counter</span>
+                <span className={`font-mono font-bold text-sm ${alertCounters.vibration >= alertCounters.threshold ? 'text-[var(--danger)]' : alertCounters.vibration > 0 ? 'text-[var(--warning)]' : 'text-[var(--success)]'}`}>
+                  {alertCounters.vibration} / {alertCounters.threshold || 3}
+                </span>
+              </div>
+              <div className="p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border)] text-center">
+                <span className="text-[var(--text-muted)] text-[10px] block font-semibold">Speed Counter</span>
+                <span className={`font-mono font-bold text-sm ${alertCounters.rpm >= alertCounters.threshold ? 'text-[var(--danger)]' : alertCounters.rpm > 0 ? 'text-[var(--warning)]' : 'text-[var(--success)]'}`}>
+                  {alertCounters.rpm} / {alertCounters.threshold || 3}
+                </span>
+              </div>
+              <div className="p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border)] text-center">
+                <span className="text-[var(--text-muted)] text-[10px] block font-semibold">Load Counter</span>
+                <span className={`font-mono font-bold text-sm ${alertCounters.load >= alertCounters.threshold ? 'text-[var(--danger)]' : alertCounters.load > 0 ? 'text-[var(--warning)]' : 'text-[var(--success)]'}`}>
+                  {alertCounters.load} / {alertCounters.threshold || 3}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Section 1: Asset Metadata */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
             label="Machine Asset ID (Read-only)"
@@ -176,54 +248,90 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
               <option value="Offline">Offline (Decommissioned)</option>
             </select>
           </div>
+        </div>
 
-          <div>
+        {/* Section 2: Live Telemetry & Vitals */}
+        <div className="p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)] space-y-3">
+          <h4 className="font-bold text-[var(--text-primary)] flex items-center gap-1.5 text-xs uppercase tracking-wider text-[var(--info)]">
+            <Sliders className="w-3.5 h-3.5 text-[var(--info)]" />
+            <span>Live Telemetry & Vitals Parameters</span>
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <Input
+                label="Rotational Speed (RPM)"
+                type="number"
+                step="1"
+                placeholder="0 – 10,000 RPM"
+                value={formData.rpm}
+                onChange={(e) => setFormData({ ...formData, rpm: e.target.value })}
+              />
+              {errors.rpm && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.rpm}</p>}
+            </div>
+
+            <div>
+              <Input
+                label="Temperature (°C)"
+                type="number"
+                step="0.1"
+                placeholder="0 – 150 °C"
+                value={formData.temperature}
+                onChange={(e) => setFormData({ ...formData, temperature: e.target.value })}
+              />
+              {errors.temperature && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.temperature}</p>}
+            </div>
+
+            <div>
+              <Input
+                label="Vibration RMS (mm/s)"
+                type="number"
+                step="0.01"
+                placeholder="0 – 20 mm/s"
+                value={formData.vibration}
+                onChange={(e) => setFormData({ ...formData, vibration: e.target.value })}
+              />
+              {errors.vibration && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.vibration}</p>}
+            </div>
+
+            <div>
+              <Input
+                label="Electrical Load / Power (kW)"
+                type="number"
+                step="0.1"
+                placeholder="0 – 500 kW"
+                value={formData.power}
+                onChange={(e) => setFormData({ ...formData, power: e.target.value })}
+              />
+              {errors.power && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.power}</p>}
+            </div>
+
+            <div>
+              <Input
+                label="Health Index Rating (0–100%)"
+                type="number"
+                placeholder="0 – 100 %"
+                value={formData.healthScore}
+                onChange={(e) => setFormData({ ...formData, healthScore: e.target.value })}
+              />
+              {errors.healthScore && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.healthScore}</p>}
+            </div>
+
             <Input
-              label="Temperature Telemetry (°C)"
-              type="number"
-              step="0.1"
-              placeholder="0 – 150 °C"
-              value={formData.temperature}
-              onChange={(e) => setFormData({ ...formData, temperature: e.target.value })}
+              label="Sensor Serial Number"
+              placeholder="e.g. SN-SENS-8801"
+              value={formData.sensorId}
+              onChange={(e) => setFormData({ ...formData, sensorId: e.target.value })}
             />
-            {errors.temperature && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.temperature}</p>}
           </div>
+        </div>
 
-          <div>
-            <Input
-              label="Vibration RMS (mm/s)"
-              type="number"
-              step="0.01"
-              placeholder="0 – 20 mm/s"
-              value={formData.vibration}
-              onChange={(e) => setFormData({ ...formData, vibration: e.target.value })}
-            />
-            {errors.vibration && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.vibration}</p>}
-          </div>
-
-          <div>
-            <Input
-              label="Health Index Rating (0–100%)"
-              type="number"
-              placeholder="0 – 100 %"
-              value={formData.healthScore}
-              onChange={(e) => setFormData({ ...formData, healthScore: e.target.value })}
-            />
-            {errors.healthScore && <p className="text-[11px] text-[var(--danger)] mt-1">{errors.healthScore}</p>}
-          </div>
-
+        {/* Section 3: Operator & Maintenance Info */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
             label="Assigned Operator"
             placeholder="e.g. Marcus Vance"
             value={formData.operator}
             onChange={(e) => setFormData({ ...formData, operator: e.target.value })}
-          />
-
-          <Input
-            label="Sensor Serial Number"
-            placeholder="e.g. SN-SENS-8801"
-            value={formData.sensorId}
-            onChange={(e) => setFormData({ ...formData, sensorId: e.target.value })}
           />
 
           <Input
@@ -252,7 +360,7 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
             Cancel
           </Button>
           <Button variant="primary" size="sm" type="submit" loading={loading} icon={Save}>
-            Save Machine Asset
+            Save Machine Telemetry
           </Button>
         </div>
       </form>
@@ -261,3 +369,4 @@ export const EditMachineModal = ({ isOpen, onClose, machine, onMachineUpdated })
 };
 
 export default EditMachineModal;
+
